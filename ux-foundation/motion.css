@@ -1,0 +1,80 @@
+/**
+ * UX Foundation: Motion & Tactile Tokens
+ * Extracted from Atelia Prototype
+ * 
+ * Focus: Physics and Feel (No Colors)
+ */
+
+:root {
+  /* ── Physics & Timing ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);       /* Sharp, snappy finish */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* Apple-like sheet curve */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* Tactile pop with overshoot */
+
+  --duration-micro: 120ms; /* Rapid haptic-style feedback */
+  --duration-press: 140ms; /* Button press response */
+  --duration-sm: 220ms;    /* Toggles / Checkboxes */
+  --duration-md: 320ms;    /* Modals / Card morphs */
+  --duration-lg: 420ms;    /* Full screen transitions */
+}
+
+/* ── Interactive Physics ── */
+
+/* Buttons & Small Elements */
+.tap-tactile {
+  transition: transform var(--duration-press) var(--ease-out);
+  will-change: transform;
+}
+.tap-tactile:active {
+  transform: scale(0.96) translate3d(0, 0, 0);
+}
+
+/* Large Cards & Full-width Surfaces */
+.card-tactile {
+  transition: transform var(--duration-press) var(--ease-spring);
+  will-change: transform;
+}
+.card-tactile:active {
+  transform: scale(0.93) translate3d(0, 0, 0);
+}
+
+/* ── Drawer & Modal Transitions ── */
+.drawer-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.drawer-container.active {
+  display: flex;
+  pointer-events: auto;
+}
+
+.drawer-sheet {
+  width: 100%;
+  transform: translate3d(0, 100%, 0);
+  transition: transform var(--duration-md) var(--ease-drawer);
+}
+
+.drawer-container.active .drawer-sheet {
+  transform: translate3d(0, 0, 0);
+}
+
+/* ── Screen Transitions ── */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  transform: translate3d(0, 0, 0);
+  transition: transform var(--duration-lg) var(--ease-drawer), 
+              opacity var(--duration-sm) var(--ease-out);
+  will-change: transform, opacity;
+}
+
+.screen.active {
+  display: flex;
+}

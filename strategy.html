@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whering 2.0 | Strategic Brainstorming</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/5.1/line/lineicons.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --card: #141414;
+            --accent: #00E5C6;
+            --text-main: #FFFFFF;
+            --text-dim: #8A8A8F;
+            --high-priority: #00E5C6;
+            --med-priority: #FFD700;
+            --low-priority: #FF453A;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 40px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .cluster-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cluster-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .cluster-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .priority-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-high { background: var(--high-priority); }
+        .dot-med { background: var(--med-priority); }
+        .dot-low { background: var(--low-priority); }
+
+        .cluster-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-item {
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .feature-tag {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 229, 198, 0.1);
+            color: var(--accent);
+        }
+
+        .junk-cluster {
+            border: 1px dashed var(--low-priority);
+            opacity: 0.6;
+        }
+
+        .junk-cluster h2 { color: var(--low-priority); }
+
+        .logic-panel {
+            background: rgba(0, 229, 198, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(0, 229, 198, 0.1);
+        }
+
+        .logic-panel h2 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .code-box {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 12px;
+            color: var(--accent);
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Strategic Feature Clustering</h1>
+        <p class="subtitle">Whering 2.0 | North Star: <strong>The Digital Stylist</strong></p>
+
+        <div class="matrix-grid">
+            <!-- Asset Vault Cluster -->
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="priority-dot dot-high"></div>
+                    <div class="cluster-title">Asset Vault</div>
+                </div>
+                <div class="feature-list">
+                    <div class="feature-item">Occasion Folders <span class="feature-tag">CORE UX</span></div>
+                    <div class="feature-item">Smart Tagging <span class="feature-tag">INPUT</span></div>
+                    <div class="feature-item">Inventory Value <span class="feature-tag">STATS</span></div>
+                </div>
+            </div>
+
+            <!-- Action Hub Cluster -->
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="priority-dot dot-high"></div>
+                    <div class="cluster-title">Studio Hub</div>
+                </div>
+                <div class="feature-list">
+                    <div class="feature-item">Try On Canvas <span class="feature-tag">CREATION</span></div>
+                    <div class="feature-item">W-Pick Selection <span class="feature-tag">AI</span></div>
+                    <div class="feature-item">Outfit Planner <span class="feature-tag">UTIL</span></div>
+                </div>
+            </div>
+
+            <!-- Discovery Hub Cluster -->
+            <div class="cluster-card">
+                <div class="cluster-header">
+                    <div class="priority-dot dot-med"></div>
+                    <div class="cluster-title">Explore Global</div>
+                </div>
+                <div class="feature-list">
+                    <div class="feature-item">Creator Feed <span class="feature-tag">SOCIAL</span></div>
+                    <div class="feature-item">Brand Hunter <span class="feature-tag">SEARCH</span></div>
+                    <div class="feature-item">Marketplace Feed <span class="feature-tag">COMMERCE</span></div>
+                </div>
+            </div>
+
+            <!-- Junk Cluster -->
+            <div class="cluster-card junk-cluster">
+                <div class="cluster-header">
+                    <div class="priority-dot dot-low"></div>
+                    <div class="cluster-title">Low Velocity</div>
+                </div>
+                <div class="feature-list">
+                    <div class="feature-item">General Settings <span class="feature-tag">ADMIN</span></div>
+                    <div class="feature-item">Basic Catalog <span class="feature-tag">STATIC</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="logic-panel">
+            <h2>The Brainstorming Logic</h2>
+            <p>Our goal was to move from a <strong>Database</strong> (Inventory management) to a <strong>Utility</strong> (Styling). This cluster analysis forced us to identify what actually contributes to <em>"getting dressed"</em> vs what is just digital clutter.</p>
+            <div class="code-box">
+                // SEGMENTATION KEY<br>
+                Novice: Needs high signifiers (Labels, simple tabs)<br>
+                Power User: Needs high efficiency (Symmetric 5, dedicated Explore)
+            </div>
+        </div>
+    </div>
+</body>
+</html>

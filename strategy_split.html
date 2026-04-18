@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symmetric 5 Pivot | Structural Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Courier+Prime&display=swap" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/5.1/line/lineicons.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0A;
+            --card: #141414;
+            --accent: #00E5C6;
+            --text-main: #FFFFFF;
+            --text-dim: #8A8A8F;
+            --pink: #FF2D55;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0px;
+            letter-spacing: -2px;
+        }
+
+        .tagline {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .comparison-layout {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: center;
+        }
+
+        .model-card {
+            flex: 1;
+            background: var(--card);
+            border-radius: 32px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 50px rgba(0, 229, 198, 0.1);
+        }
+
+        .model-card.inactive {
+            opacity: 0.5;
+            filter: grayscale(0.8);
+        }
+
+        .label {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .nav-mock {
+            background: #000;
+            height: 80px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .nav-item.active {
+            color: var(--text-main);
+        }
+
+        .nav-item.center {
+            width: 54px;
+            height: 54px;
+            background: var(--accent);
+            color: #000;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .logic-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .logic-list li {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .check { color: var(--accent); }
+        .cross { color: var(--pink); }
+
+        .verdict {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span class="tagline">Information Architecture Analysis</span>
+        <h1>The Navigation Pivot</h1>
+    </div>
+
+    <div class="comparison-layout">
+        <!-- Legacy 3-Tab Model -->
+        <div class="model-card inactive">
+            <h2>Minimalist 3-Tab</h2>
+            <p class="description">Standard approach for MVP utility apps. Focuses on core inventory.</p>
+            
+            <div class="nav-mock">
+                <div class="nav-item"><i class="lni lni-home-2"></i></div>
+                <div class="nav-item center"><i class="lni lni-tshirt-2"></i></div>
+                <div class="nav-item"><i class="lni lni-user-4"></i></div>
+            </div>
+
+            <ul class="logic-list">
+                <li><span class="cross">✕</span> Low discoverability for secondary features.</li>
+                <li><span class="cross">✕</span> No dedicated space for "Social Feedback".</li>
+                <li><span class="cross">✕</span> Search buried inside tabs (High friction).</li>
+            </ul>
+
+            <div class="verdict">
+                STATUS: REJECTED<br>
+                REASON: Too restrictive for Whering's future commercial & social scale.
+            </div>
+        </div>
+
+        <!-- The Symmetric 5 Model -->
+        <div class="model-card active">
+            <div class="label">WINNER</div>
+            <h2>Symmetric 5</h2>
+            <p class="description">Premium "Destinational" approach. Balances creation and consumption.</p>
+            
+            <div class="nav-mock">
+                <div class="nav-item active"><i class="lni lni-home-2"></i></div>
+                <div class="nav-item"><i class="lni lni-search-alt"></i></div>
+                <div class="nav-item center"><i class="lni lni-plus"></i></div>
+                <div class="nav-item"><i class="lni lni-alarm"></i></div>
+                <div class="nav-item"><i class="lni lni-user-4"></i></div>
+            </div>
+
+            <ul class="logic-list">
+                <li><span class="check">✓</span> <strong>Center Action:</strong> Maximal thumb reach for 'Studio'.</li>
+                <li><span class="check">✓</span> <strong>Explore Tab:</strong> Dedicated hub for Brands/Trends.</li>
+                <li><span class="check">✓</span> <strong>Social Hub:</strong> Real-time feedback via Inbox tab.</li>
+                <li><span class="check">✓</span> <strong>Mental Room:</strong> No semantic pollution between tabs.</li>
+            </ul>
+
+            <div class="verdict">
+                STATUS: ADOPTED<br>
+                REASON: Provides the real-estate needed for a "Power User" experience.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
