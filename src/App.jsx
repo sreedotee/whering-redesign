@@ -1,5 +1,7 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react';
 import { loadAnnotations } from 'agentation';
+import { DialRoot, useDialKit } from 'dialkit';
+import 'dialkit/styles.css';
 import { initSwipeBack } from '../ux-foundation/mechanics.js';
 
 const Agentation = lazy(() =>
@@ -963,17 +965,25 @@ function DiscoverCard({ card, onOpen }) {
 
 function DiscoverOutfitOverlay({ card, onClose }) {
   const detail = discoverOutfitDetails[card.id] ?? discoverOutfitDetails.default;
+  const { overlayRadius, authorGap, authorPad, itemsGap, itemRadius } = useDialKit('Discover Overlay', {
+    overlayRadius: [12, 0, 48],
+    authorGap:     [8,  0, 32],
+    authorPad:     [0,  0, 24],
+    itemsGap:      [8,  0, 32],
+    itemRadius:    [4,  0, 32],
+  });
 
   return (
     <div
       className="discover-overlay"
+      style={{ borderRadius: overlayRadius }}
       onClick={(event) => {
         if (event.target === event.currentTarget) {
           onClose();
         }
       }}
     >
-      <div className="discover-overlay-card">
+      <div className="discover-overlay-card" style={{ borderRadius: overlayRadius, overflow: 'hidden' }}>
         <div
           className="discover-overlay-hero"
           style={{
@@ -988,7 +998,7 @@ function DiscoverOutfitOverlay({ card, onClose }) {
         </div>
 
         <div className="discover-overlay-body">
-          <div className="discover-overlay-author-row">
+          <div className="discover-overlay-author-row" style={{ gap: authorGap, padding: authorPad }}>
             <div className="discover-author">
               <div className="discover-author-avatar" style={card.authorAvatar ? { backgroundImage: `url(${card.authorAvatar})` } : undefined} />
               <div className="discover-author-text">
@@ -999,10 +1009,10 @@ function DiscoverOutfitOverlay({ card, onClose }) {
             <button type="button" className="discover-overlay-follow">Follow</button>
           </div>
           <div className="discover-overlay-items-header">Items used</div>
-          <div className="discover-overlay-items">
+          <div className="discover-overlay-items" style={{ gap: itemsGap }}>
             {detail.items.map((item) => (
               <div key={item.id} className="discover-overlay-item-card">
-                <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})` }}>
+                <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})`, borderRadius: itemRadius }}>
                   <button type="button" className="discover-overlay-item-plus" aria-label={`Save ${item.name}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ transform: 'scale(0.65)', display: 'flex' }}><BookmarkIcon dark /></div>
                   </button>
@@ -1314,7 +1324,13 @@ function App() {
   const [globalDial, setGlobalDial] = useState({ radius: 20, gutter: 16, appScale: 1 });
   const screenHistoryRef = useRef(['home']);
 
-  // ... same syncAnnotations code ...
+  const syncAnnotations = (annotations) => {
+    fetch(AGENTATION_SYNC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(annotations),
+    }).catch(() => {});
+  };
 
   const activeScreenMeta = useMemo(
     () => screens.find((screen) => screen.id === activeScreen) ?? screens[0],
@@ -1375,6 +1391,7 @@ function App() {
           />
         </Suspense>
       </div>
+      <DialRoot position="bottom-left" defaultOpen={false} />
     </>
   );
 }
