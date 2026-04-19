@@ -3,59 +3,42 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 4747;
-const outputDir = path.join(__dirname, '..', '.agentation');
-const outputFile = path.join(outputDir, 'latest-annotations.json');
+const DATA_DIR = path.join(__dirname, '..', '.agentation');
 
-fs.mkdirSync(outputDir, { recursive: true });
-
-const sendJson = (res, statusCode, body) => {
-  res.writeHead(statusCode, {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  });
-  res.end(JSON.stringify(body));
-};
+if (!fs.existsSync(DATA_DIR)) {
+  fs.mkdirSync(DATA_DIR, { recursive: true });
+}
 
 const server = http.createServer((req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
   if (req.method === 'OPTIONS') {
-    sendJson(res, 200, { ok: true });
+    res.writeHead(204);
+    res.end();
     return;
   }
 
-  if (req.method === 'GET' && req.url === '/annotations') {
-    if (!fs.existsSync(outputFile)) {
-      sendJson(res, 200, { annotations: [] });
-      return;
-    }
-
-    const contents = fs.readFileSync(outputFile, 'utf8');
-    sendJson(res, 200, JSON.parse(contents));
-    return;
-  }
-
-  if (req.method === 'POST' && req.url === '/annotations') {
+  if (req.url === '/annotations' && req.method === 'POST') {
     let body = '';
-
-    req.on('data', (chunk) => {
-      body += chunk;
-    });
-
+    req.on('data', chunk => { body += chunk.toString(); });
     req.on('end', () => {
       try {
-        const payload = JSON.parse(body || '{}');
-        fs.writeFileSync(outputFile, JSON.stringify(payload, null, 2));
-        sendJson(res, 200, { ok: true, count: payload.annotations?.length ?? 0 });
-      } catch (error) {
-        sendJson(res, 400, { ok: false, error: error.message });
+        const data = JSON.parse(body);
+        const filePath = path.join(DATA_DIR, 'latest-annotations.json');
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ status: 'success' }));
+      } catch (err) {
+        res.writeHead(400);
+        res.end('Invalid JSON');
       }
     });
-
-    return;
+  } else {
+    res.writeHead(404);
+    res.end();
   }
-
-  sendJson(res, 404, { ok: false, error: 'Not found' });
 });
 
 server.listen(PORT, () => {

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typography Measure Tool</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --accent: #ff2a6d; /* Vibrant pink/red for clear visibility */
+            --ruler-color: #05d9e8; /* Neon blue for contrast */
+            --panel-bg: rgba(20, 20, 20, 0.85);
+            --text-color: #f1f1f1;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-color);
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            color: var(--text-color);
+            user-select: none;
+        }
+
+        #canvas {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #drop-zone {
+            position: absolute;
+            inset: 20px;
+            border: 2px dashed #333;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+            background: rgba(13, 13, 13, 0.6);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        #drop-zone.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+
+        #drop-zone.dragover {
+            background: rgba(20, 20, 20, 0.8);
+            border-color: var(--ruler-color);
+            transform: scale(1.02);
+        }
+
+        #drop-zone h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        #drop-zone p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        #image-container {
+            position: absolute;
+            transform-origin: top left;
+            cursor: grab;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 20px 50px rgba(0,0,0,0.5); /* subtle border */
+        }
+        
+        #image-container:active {
+            cursor: grabbing;
+        }
+
+        #image {
+            display: block;
+            pointer-events: none; /* allows container dragging */
+            border-radius: 4px;
+        }
+
+        .controls {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: var(--panel-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            backdrop-filter: blur(16px);
+            min-width: 220px;
+            transition: opacity 0.3s ease;
+        }
+
+        button {
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-1px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        input[type="number"] {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 10px;
+            border-radius: 6px;
+            width: 70px;
+            font-family: inherit;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--ruler-color);
+        }
+
+        input[type="range"] {
+            accent-color: var(--ruler-color);
+            width: 100px;
+        }
+
+        .ruler {
+            position: absolute;
+            background: var(--ruler-color);
+            z-index: 50;
+            box-shadow: 0 0 4px rgba(5, 217, 232, 0.4);
+        }
+
+        .ruler.vertical {
+            width: 1px;
+            height: 100%;
+            top: 0;
+            cursor: col-resize;
+            margin-left: -0.5px;
+        }
+
+        .ruler.horizontal {
+            width: 100%;
+            height: 1px;
+            left: 0;
+            cursor: row-resize;
+            margin-top: -0.5px;
+        }
+
+        .ruler:hover, .ruler.active {
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            z-index: 55;
+        }
+        
+        .ruler-handle {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--ruler-color);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            transition: background 0.2s, transform 0.1s;
+        }
+        
+        .vertical .ruler-handle {
+            top: 24px;
+            left: -12px;
+            cursor: col-resize;
+        }
+
+        .horizontal .ruler-handle {
+            left: 24px;
+            top: -12px;
+            cursor: row-resize;
+            transform: rotate(90deg);
+        }
+        
+        .ruler:hover .ruler-handle, .ruler.active .ruler-handle {
+             background: var(--accent);
+             color: white;
+        }
+
+        .horizontal .ruler:hover .ruler-handle, .horizontal .ruler.active .ruler-handle {
+             transform: rotate(90deg) scale(1.1);
+        }
+
+        .vertical .ruler:hover .ruler-handle, .vertical .ruler.active .ruler-handle {
+             transform: scale(1.1);
+        }
+
+        .distance-label {
+            position: absolute;
+            background: var(--accent);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 60;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 42, 109, 0.4);
+            white-space: nowrap;
+        }
+        
+        .distance-label::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .distance-line {
+            position: absolute;
+            background: rgba(255, 42, 109, 0.6);
+            z-index: 59;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* End caps for distance line */
+        .distance-line::before, .distance-line::after {
+            content: '';
+            position: absolute;
+            background: var(--accent);
+        }
+
+        .distance-line[data-dir="horizontal"]::before, .distance-line[data-dir="horizontal"]::after {
+            width: 1px;
+            height: 10px;
+            top: -5px;
+        }
+        .distance-line[data-dir="horizontal"]::before { left: 0; }
+        .distance-line[data-dir="horizontal"]::after { right: 0; }
+
+        .distance-line[data-dir="vertical"]::before, .distance-line[data-dir="vertical"]::after {
+            height: 1px;
+            width: 10px;
+            left: -5px;
+        }
+        .distance-line[data-dir="vertical"]::before { top: 0; }
+        .distance-line[data-dir="vertical"]::after { bottom: 0; }
+
+
+        .instructions {
+            font-size: 11px; 
+            color: #777; 
+            margin-top: 8px;
+            line-height: 1.5;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin: 4px 0;
+            width: 100%;
+        }
+
+        .scratchpad {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--panel-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            backdrop-filter: blur(16px);
+            width: 260px;
+            height: 380px;
+        }
+
+        .scratchpad-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .scratchpad-status {
+            font-size: 11px;
+            color: #777;
+            font-weight: 400;
+        }
+
+        #scratchpad-input {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            flex: 1;
+            font-family: inherit;
+            font-size: 13px;
+            line-height: 1.5;
+            resize: none;
+        }
+
+        #scratchpad-input:focus {
+            outline: none;
+            border-color: var(--ruler-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="controls" id="controls" style="display: none;">
+        <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Canvas Settings</div>
+        <div class="input-group">
+            <label>Image W:</label>
+            <input type="number" id="img-width">
+        </div>
+        <div class="input-group">
+            <label>Image H:</label>
+            <input type="number" id="img-height">
+        </div>
+        <div class="input-group">
+            <label>Opacity:</label>
+            <input type="range" id="img-opacity" min="10" max="100" value="100">
+        </div>
+        <hr>
+        <button id="clear-image" style="color: #ff4a4a; border-color: rgba(255, 74, 74, 0.2);">
+            Clear Application
+        </button>
+        <div class="instructions">
+            • <b>Drag image</b> to position it<br>
+            • <b>Press V / H</b> to quick-add rulers<br>
+            • <b>Drag rulers</b> to measure<br>
+            • <b>Double-click</b> ruler handle to delete
+        </div>
+    </div>
+
+    <div class="scratchpad">
+        <div class="scratchpad-title">
+            Notes
+            <span class="scratchpad-status" id="scratch-status">Saved</span>
+        </div>
+        <textarea id="scratchpad-input" placeholder="Type spacing goals, colors, and values here..."></textarea>
+    </div>
+
+    <div id="canvas">
+        <div id="drop-zone">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--ruler-color)" stroke-width="1.5" style="margin-bottom: 16px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <h2>Drop or Paste Mockup</h2>
+            <p>PNG, JPG, WEBP • Analyzes element spacing instantly</p>
+        </div>
+        <div id="image-container" style="display: none;">
+            <img id="image" src="" alt="Dropped Image">
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const image = document.getElementById('image');
+        const imageContainer = document.getElementById('image-container');
+        const controls = document.getElementById('controls');
+        const imgWidthInput = document.getElementById('img-width');
+        const imgHeightInput = document.getElementById('img-height');
+        const imgOpacityInput = document.getElementById('img-opacity');
+        const clearImageBtn = document.getElementById('clear-image');
+        const canvas = document.getElementById('canvas');
+        const scratchpadInput = document.getElementById('scratchpad-input');
+        const scratchStatus = document.getElementById('scratch-status');
+
+        // Load scratchpad
+        const savedNotes = localStorage.getItem('typographyMeasureNotes');
+        if (savedNotes) {
+            scratchpadInput.value = savedNotes;
+        }
+        
+        let saveTimeout;
+        scratchpadInput.addEventListener('input', (e) => {
+            scratchStatus.innerText = 'Saving...';
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                localStorage.setItem('typographyMeasureNotes', e.target.value);
+                scratchStatus.innerText = 'Saved';
+            }, 500);
+        });
+
+        let rulers = [];
+        let distanceElements = [];
+        let mousePos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+        // -------------------------
+        // Drag & Drop Handlers
+        // -------------------------
+        document.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        document.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+        });
+
+        document.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.type.startsWith('image/')) {
+                    loadImage(file);
+                }
+            }
+        });
+
+        document.addEventListener('paste', (e) => {
+            const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+            for (let index in items) {
+                const item = items[index];
+                if (item.kind === 'file' && item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    loadImage(file);
+                    break;
+                }
+            }
+        });
+
+        function loadImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                image.src = e.target.result;
+                image.onload = () => {
+                    dropZone.classList.add('hidden');
+                    imageContainer.style.display = 'block';
+                    controls.style.display = 'flex';
+                    
+                    imgWidthInput.value = image.naturalWidth;
+                    imgHeightInput.value = image.naturalHeight;
+                    
+                    image.style.width = image.naturalWidth + 'px';
+                    image.style.height = image.naturalHeight + 'px';
+                    
+                    // Center the image container
+                    imageContainer.style.left = Math.max(0, (window.innerWidth - image.naturalWidth) / 2) + 'px';
+                    imageContainer.style.top = Math.max(0, (window.innerHeight - image.naturalHeight) / 2) + 'px';
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // -------------------------
+        // Controls Handlers
+        // -------------------------
+        imgWidthInput.addEventListener('change', (e) => {
+            image.style.width = e.target.value + 'px';
+            image.style.height = 'auto';
+            imgHeightInput.value = image.offsetHeight;
+        });
+
+        imgHeightInput.addEventListener('change', (e) => {
+            image.style.height = e.target.value + 'px';
+            image.style.width = 'auto';
+            imgWidthInput.value = image.offsetWidth;
+        });
+
+        imgOpacityInput.addEventListener('input', (e) => {
+            imageContainer.style.opacity = e.target.value / 100;
+        });
+
+        clearImageBtn.addEventListener('click', () => {
+            image.src = '';
+            imageContainer.style.display = 'none';
+            controls.style.display = 'none';
+            dropZone.classList.remove('hidden');
+            rulers.forEach(r => r.element.remove());
+            rulers = [];
+            clearDistances();
+        });
+
+        // -------------------------
+        // Canvas Dragging
+        // -------------------------
+        let isDraggingImage = false;
+        let imgStart = { x: 0, y: 0 };
+        let mouseStart = { x: 0, y: 0 };
+
+        imageContainer.addEventListener('mousedown', (e) => {
+            isDraggingImage = true;
+            mouseStart = { x: e.clientX, y: e.clientY };
+            imgStart = { 
+                x: parseInt(imageContainer.style.left || 0, 10), 
+                y: parseInt(imageContainer.style.top || 0, 10) 
+            };
+            e.preventDefault();
+        });
+
+        // -------------------------
+        // Ruler Logic
+        // -------------------------
+        let rulerIdCounter = 0;
+        let activeRuler = null;
+
+        function createRuler(type, pos) {
+            const ruler = {
+                id: ++rulerIdCounter,
+                type: type,
+                pos: pos,
+                element: document.createElement('div')
+            };
+            
+            ruler.element.className = `ruler ${type}`;
+            const handle = document.createElement('div');
+            handle.className = 'ruler-handle';
+            handle.innerText = '||';
+            ruler.element.appendChild(handle);
+            
+            updateRulerPos(ruler);
+            
+            ruler.element.addEventListener('mousedown', (e) => {
+                activeRuler = ruler;
+                ruler.element.classList.add('active');
+                e.stopPropagation();
+                e.preventDefault();
+            });
+
+            handle.addEventListener('dblclick', (e) => {
+                ruler.element.remove();
+                rulers = rulers.filter(r => r.id !== ruler.id);
+                clearDistances();
+                renderStaticDistances();
+                e.stopPropagation();
+            });
+            
+            canvas.appendChild(ruler.element);
+            rulers.push(ruler);
+            
+            // Re-render
+            clearDistances();
+            renderStaticDistances();
+            return ruler;
+        }
+
+        function updateRulerPos(ruler) {
+            if (ruler.type === 'vertical') {
+                ruler.element.style.left = ruler.pos + 'px';
+            } else {
+                ruler.element.style.top = ruler.pos + 'px';
+            }
+        }
+
+
+
+        // Keybindings
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.key.toLowerCase() === 'v') {
+                createRuler('vertical', mousePos.x || window.innerWidth / 2);
+            }
+            if (e.key.toLowerCase() === 'h') {
+                createRuler('horizontal', mousePos.y || window.innerHeight / 2);
+            }
+        });
+
+        // Global Mouse Move
+        document.addEventListener('mousemove', (e) => {
+            mousePos.x = e.clientX;
+            mousePos.y = e.clientY;
+
+            if (isDraggingImage) {
+                const dx = e.clientX - mouseStart.x;
+                const dy = e.clientY - mouseStart.y;
+                imageContainer.style.left = (imgStart.x + dx) + 'px';
+                imageContainer.style.top = (imgStart.y + dy) + 'px';
+            } else if (activeRuler) {
+                activeRuler.pos = (activeRuler.type === 'vertical') ? e.clientX : e.clientY;
+                updateRulerPos(activeRuler);
+                
+                // Show dynamic distances centered around mouse cursor
+                renderDynamicDistances(activeRuler);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingImage = false;
+            if(activeRuler) {
+                activeRuler.element.classList.remove('active');
+                activeRuler = null;
+                // revert to static distances
+                clearDistances();
+                renderStaticDistances();
+            }
+        });
+
+        // -------------------------
+        // Distance Measurements
+        // -------------------------
+        function clearDistances() {
+            distanceElements.forEach(el => el.remove());
+            distanceElements = [];
+        }
+
+        function renderStaticDistances() {
+            // Draw distances between adjacent rulers statically mostly at edges
+            const vRulers = rulers.filter(r => r.type === 'vertical').sort((a,b) => a.pos - b.pos);
+            const hRulers = rulers.filter(r => r.type === 'horizontal').sort((a,b) => a.pos - b.pos);
+            
+            for(let i=0; i<vRulers.length - 1; i++) {
+                drawDistanceLine(vRulers[i].pos, vRulers[i+1].pos, 'horizontal', 40);
+            }
+            
+            for(let i=0; i<hRulers.length - 1; i++) {
+                drawDistanceLine(hRulers[i].pos, hRulers[i+1].pos, 'vertical', 40);
+            }
+        }
+
+        function renderDynamicDistances(draggedRuler) {
+            clearDistances();
+            
+            // Draw all static distances for the OTHER axis 
+            const otherAxis = draggedRuler.type === 'vertical' ? 'horizontal' : 'vertical';
+            const otherRulers = rulers.filter(r => r.type === otherAxis).sort((a,b) => a.pos - b.pos);
+            
+            for(let i=0; i<otherRulers.length - 1; i++) {
+                drawDistanceLine(otherRulers[i].pos, otherRulers[i+1].pos, draggedRuler.type, 40);
+            }
+
+            const sameAxisRulers = rulers.filter(r => r.type === draggedRuler.type).sort((a,b) => a.pos - b.pos);
+            const rIndex = sameAxisRulers.findIndex(r => r.id === draggedRuler.id);
+
+            // Draw dynamic distance for the dragged ruler (next to cursor)
+            if (rIndex > 0) {
+                const prev = sameAxisRulers[rIndex - 1];
+                const crossPos = draggedRuler.type === 'vertical' ? mousePos.y : mousePos.x;
+                drawDistanceLine(prev.pos, draggedRuler.pos, otherAxis, crossPos);
+            }
+            if (rIndex < sameAxisRulers.length - 1) {
+                const next = sameAxisRulers[rIndex + 1];
+                const crossPos = draggedRuler.type === 'vertical' ? mousePos.y : mousePos.x;
+                drawDistanceLine(draggedRuler.pos, next.pos, otherAxis, crossPos);
+            }
+
+            // Statically measure the rest of the same-axis rulers that aren't touching dragged ruler
+            for(let i=0; i<sameAxisRulers.length - 1; i++) {
+                if (i !== rIndex - 1 && i !== rIndex) {
+                    drawDistanceLine(sameAxisRulers[i].pos, sameAxisRulers[i+1].pos, otherAxis, 40);
+                }
+            }
+        }
+
+        function drawDistanceLine(pos1, pos2, dir, crossPos) {
+            const dist = Math.abs(pos2 - pos1);
+            if (dist < 10) return; // Hide if too small
+            
+            const label = document.createElement('div');
+            label.className = 'distance-label';
+            label.innerText = Math.round(dist) + 'px';
+            
+            const line = document.createElement('div');
+            line.className = 'distance-line';
+            line.setAttribute('data-dir', dir);
+            
+            if (dir === 'horizontal') {
+                label.style.left = (Math.min(pos1, pos2) + dist/2) + 'px';
+                label.style.top = crossPos + 'px';
+                label.style.transform = 'translate(-50%, -50%)';
+                
+                line.style.left = Math.min(pos1, pos2) + 'px';
+                line.style.top = crossPos + 'px';
+                line.style.width = dist + 'px';
+                line.style.height = '1px';
+            } else {
+                label.style.top = (Math.min(pos1, pos2) + dist/2) + 'px';
+                label.style.left = crossPos + 'px';
+                label.style.transform = 'translate(-50%, -50%)';
+                
+                line.style.top = Math.min(pos1, pos2) + 'px';
+                line.style.left = crossPos + 'px';
+                line.style.height = dist + 'px';
+                line.style.width = '1px';
+            }
+            
+            canvas.appendChild(line);
+            canvas.appendChild(label);
+            distanceElements.push(line, label);
+        }
+        
+    </script>
+</body>
+</html>

@@ -213,6 +213,10 @@ body {
     --app-bottom-nav-height: 82px;
 }
 
+#app-container:has(.discover-overlay) .app-bottom-nav {
+    display: none;
+}
+
 .screen {
     position: absolute;
     inset: 0;
@@ -259,7 +263,7 @@ body {
     font-family: "Outfit", system-ui, sans-serif;
     font-size: 15px;
     line-height: 18px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .discover-status-icons {
@@ -332,7 +336,7 @@ body {
     font-family: system-ui, sans-serif;
     font-size: 14px;
     line-height: 18px;
-    font-weight: 500;
+    font-weight: 400;
     opacity: 0.55;
 }
 
@@ -395,6 +399,17 @@ body {
     position: relative;
     width: 100%;
     height: var(--discover-card-height, 266px);
+    --discover-profile-icon-size: 32px;
+    --discover-profile-name-size: 14px;
+    --discover-profile-name-line: 16px;
+    --discover-profile-context-size: 12px;
+    --discover-profile-context-line: 14px;
+    --discover-save-button-height: 24px;
+    --discover-save-button-padding-inline: 12px;
+    --discover-save-button-gap: 3px;
+    --discover-save-text-size: 9px;
+    --discover-save-text-line: 11px;
+    --discover-save-icon-size: 10px;
     display: flex;
     border-radius: 8px;
     overflow: clip;
@@ -436,10 +451,10 @@ body {
 }
 
 .discover-author-avatar {
-    width: 17px;
-    height: 17px;
+    width: var(--discover-profile-icon-size);
+    height: var(--discover-profile-icon-size);
     flex-shrink: 0;
-    border-radius: 12px;
+    border-radius: 999px;
     background-image: url("https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/076G0GXYVRGMS7Y37SCVSH1FDA.jpg");
     background-size: cover;
     background-position: center;
@@ -453,16 +468,16 @@ body {
 
 .discover-author-name {
     color: #0D0D0D;
-    font-size: 9px;
-    line-height: 11px;
+    font-size: var(--discover-profile-name-size);
+    line-height: var(--discover-profile-name-line);
     font-weight: 400;
 }
 
 .discover-author-context {
-    color: #555555;
-    font-size: 6px;
-    line-height: 7px;
-    font-weight: 500;
+    color: #8C8C8C;
+    font-size: var(--discover-profile-context-size);
+    line-height: var(--discover-profile-context-line);
+    font-weight: 400;
 }
 
 .discover-follow-chip {
@@ -474,7 +489,7 @@ body {
     color: #3B3B3B;
     font-size: 9px;
     line-height: 11px;
-    font-weight: 500;
+    font-weight: 400;
     font-family: "Outfit", system-ui, sans-serif;
     flex-shrink: 0;
 }
@@ -493,7 +508,7 @@ body {
     color: #ffffff;
     font-size: 12px;
     line-height: 14px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .discover-item-subtitle {
@@ -540,15 +555,15 @@ body {
 }
 
 .discover-save-pill {
-    height: 24px;
-    padding-inline: 12px;
-    gap: 3px;
+    height: var(--discover-save-button-height);
+    padding-inline: var(--discover-save-button-padding-inline);
+    gap: var(--discover-save-button-gap);
     justify-content: center;
     background-color: #0D0D0D;
     color: #FFFFFF;
-    font-size: 9px;
-    line-height: 11px;
-    font-weight: 500;
+    font-size: var(--discover-save-text-size);
+    line-height: var(--discover-save-text-line);
+    font-weight: 400;
     font-family: "Outfit", system-ui, sans-serif;
 }
 
@@ -562,8 +577,8 @@ body {
 
 .discover-save-pill svg,
 .discover-save-icon svg {
-    width: 10px;
-    height: 10px;
+    width: var(--discover-save-icon-size);
+    height: var(--discover-save-icon-size);
 }
 
 .discover-overlay {
@@ -573,9 +588,9 @@ body {
     background: rgba(83, 86, 98, 0.66);
     backdrop-filter: blur(6px);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 86px 18px 110px;
+    padding: 20px;
 }
 
 .discover-overlay-card {
@@ -622,8 +637,11 @@ body {
 }
 
 .discover-overlay-body {
-    padding: 14px 14px 12px;
+    padding: 16px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .discover-overlay-author-row {
@@ -641,17 +659,17 @@ body {
     border-radius: 10px;
     background: #C9FF00;
     color: #0D0D0D;
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 400;
     cursor: pointer;
 }
 
 .discover-overlay-title {
     margin: 0;
     color: #0D0D0D;
-    font-size: 21px;
+    font-size: 16px;
     line-height: 1.06;
-    font-weight: 800;
+    font-weight: 400;
     letter-spacing: -0.04em;
 }
 
@@ -668,8 +686,8 @@ body {
     height: 32px;
     border: none;
     border-radius: 999px;
-    background: #F5F5F5;
-    color: #0D0D0D;
+    background: transparent;
+    color: #000000;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -686,8 +704,8 @@ body {
     color: #0D0D0D;
     font-size: 15px;
     line-height: 1.15;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-weight: 400;
+    margin-bottom: 0;
 }
 
 .discover-overlay-items {
@@ -703,11 +721,11 @@ body {
 }
 
 .discover-overlay-item-card {
-    width: 96px;
-    min-width: 96px;
+    width: 72px;
+    min-width: 72px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .discover-overlay-item-image {
@@ -742,16 +760,16 @@ body {
 
 .discover-overlay-item-brand {
     color: #0D0D0D;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.2;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .discover-overlay-item-name {
-    color: #6F6F6F;
+    color: #8C8C8C;
     font-size: 10px;
     line-height: 1.2;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .discover-overlay-footer {
@@ -775,14 +793,14 @@ body {
     color: #828282;
     font-size: 11px;
     line-height: 1.25;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .discover-overlay-footer-copy strong {
     color: #0D0D0D;
     font-size: 15px;
     line-height: 1.12;
-    font-weight: 800;
+    font-weight: 400;
     letter-spacing: -0.03em;
 }
 
@@ -794,9 +812,9 @@ body {
     border-radius: 999px;
     background: #0D0D0D;
     color: #FFFFFF;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 400;
     cursor: pointer;
     letter-spacing: -0.02em;
     display: inline-flex;
@@ -885,7 +903,7 @@ body {
     font-family: "Outfit", system-ui, sans-serif;
     font-size: 15px;
     line-height: 18px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .app-status-icons {
@@ -965,7 +983,7 @@ h1, .display {
 h2, .heading {
     font-size: var(--font-size-36);
     line-height: var(--line-height-36);
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .caption {
@@ -983,7 +1001,7 @@ h2, .heading {
     padding: var(--spacing-sm) var(--spacing-lg);
     border: none;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 400;
     border-radius: var(--radius-pill);
 }
 
@@ -995,7 +1013,7 @@ h2, .heading {
     align-items: center;
     padding: 0 40px;
     height: 80px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .status-right {
@@ -1055,7 +1073,7 @@ h2, .heading {
 
 .home-tab {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--fg-secondary);
     transition: color var(--duration-sm) var(--ease-out);
     cursor: pointer;
@@ -1168,14 +1186,14 @@ h2, .heading {
 
 .author-name {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--accent-white);
     line-height: 1.2;
 }
 
 .author-context {
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -1183,7 +1201,7 @@ h2, .heading {
     background-color: #C9FF00;
     color: #0D0D0D;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     padding: 4px 12px;
     border-radius: 8px;
     cursor: pointer;
@@ -1208,7 +1226,7 @@ h2, .heading {
     gap: 8px;
     color: #FFFFFF;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .action-pill-main svg {
@@ -1252,7 +1270,7 @@ h2, .heading {
 .search-bar .placeholder {
     font-size: 32px;
     color: var(--fg-secondary);
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* ── Bottom Navigation ── */
@@ -1372,7 +1390,7 @@ h2, .heading {
     padding: 24px;
     border-radius: 20px;
     font-size: 32px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .divider {
@@ -1437,7 +1455,7 @@ h2, .heading {
 .search-input-placeholder {
     color: #A0A0A0;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     flex-grow: 1;
     min-width: 0;
     white-space: nowrap;
@@ -1489,7 +1507,7 @@ h2, .heading {
     color: #FFFFFF;
     font-family: var(--font-body);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0.7px;
     text-transform: uppercase;
     margin-bottom: 4px;
@@ -1499,7 +1517,7 @@ h2, .heading {
     color: #FFFFFF;
     font-family: var(--font-body);
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1.15;
     max-width: 210px;
 }
@@ -1534,7 +1552,7 @@ h2, .heading {
     background-color: #EEEEEE;
     color: #555555;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
@@ -1556,13 +1574,13 @@ h2, .heading {
 }
 .explore-section-title {
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     color: #0D0D0D;
     line-height: 1.1;
 }
 .explore-section-action {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     color: #555555;
 }
 
@@ -1583,7 +1601,7 @@ h2, .heading {
     align-items: center;
     justify-content: center;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 400;
     color: #0D0D0D;
     background-size: cover;
     background-position: center;
@@ -1591,7 +1609,7 @@ h2, .heading {
 
 .circle-name {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 400;
     color: #0D0D0D;
     max-width: 58px;
     text-align: center;
@@ -1613,7 +1631,7 @@ h2, .heading {
 .trending-outfit-title {
     color: #FFFFFF;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.2;
 }
 
@@ -1629,7 +1647,7 @@ h2, .heading {
     color: #FAFAFA;
     font-family: "Outfit", system-ui, sans-serif;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.02em;
     cursor: pointer;
     z-index: 1200;
@@ -1673,7 +1691,7 @@ h2, .heading {
     border-radius: 999px;
     color: #E68A00;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .studio-canvas {
@@ -1693,7 +1711,7 @@ h2, .heading {
 .studio-canvas-placeholder {
     color: #828282;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
     line-height: 1.4;
     max-width: 160px;
@@ -1722,7 +1740,7 @@ h2, .heading {
     border: 1.5px solid #EAEAEA;
     color: #555555;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1742,7 +1760,7 @@ h2, .heading {
     padding: 4px 16px 16px;
     color: #0D0D0D;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 400;
     flex-shrink: 0;
 }
 
@@ -1789,7 +1807,7 @@ h2, .heading {
     color: #FFFFFF;
     border-radius: 999px;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     border: none;
     cursor: pointer;
     pointer-events: auto;
@@ -1826,7 +1844,7 @@ h2, .heading {
 
 .inbox-title {
     font-size: 28px;
-    font-weight: 800;
+    font-weight: 400;
     color: #0D0D0D;
     letter-spacing: -0.5px;
 }
@@ -1842,7 +1860,7 @@ h2, .heading {
     background-color: #F5F5F5;
     color: #555555;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1868,7 +1886,7 @@ h2, .heading {
 .inbox-section-title {
     padding-left: 16px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 400;
     color: #0D0D0D;
     text-transform: capitalize;
 }
@@ -1937,14 +1955,14 @@ h2, .heading {
 }
 
 .inbox-action-line .name {
-    font-weight: 700;
+    font-weight: 400;
     color: #0D0D0D;
 }
 
 .inbox-time-code {
     font-size: 10px;
     color: #828282;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .inbox-meta-col {
@@ -1962,7 +1980,7 @@ h2, .heading {
     background-color: #F5F5F5;
     color: #0D0D0D;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 400;
     border: none;
     cursor: pointer;
 }
@@ -2078,7 +2096,7 @@ h2, .heading {
     margin: 0;
     font-family: "Outfit", system-ui, sans-serif;
     font-size: 23px;
-    font-weight: 700;
+    font-weight: 400;
     color: #0D0D0D;
     line-height: 1.05;
     letter-spacing: -0.04em;
@@ -2086,7 +2104,7 @@ h2, .heading {
 
 .profile-handle {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     color: #828282;
 }
 
@@ -2105,7 +2123,7 @@ h2, .heading {
     color: #FFFFFF;
     border-radius: 24px;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 400;
     border: none;
     cursor: pointer;
     transition: opacity 0.2s ease;
@@ -2144,7 +2162,7 @@ h2, .heading {
 
 .profile-tab {
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
     color: #828282;
     background: none;
     border: none;
@@ -2155,7 +2173,7 @@ h2, .heading {
 
 .profile-tab.active {
     color: #0D0D0D;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .profile-tab.active::after {
@@ -2167,19 +2185,6 @@ h2, .heading {
     height: 3px;
     background-color: #0D0D0D;
     border-radius: 2px;
-}
-
-.grid-toggle-btn {
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    color: #0D0D0D;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .profile-filters-scroll {
@@ -2214,7 +2219,7 @@ h2, .heading {
     background: #FFFFFF;
     color: #0D0D0D;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1;
     cursor: pointer;
     white-space: nowrap;
@@ -2357,7 +2362,7 @@ h2, .heading {
 .profile-menu-label {
     font-size: 15px;
     line-height: 1.1;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: -0.02em;
 }
 
@@ -2446,7 +2451,7 @@ h2, .heading {
     margin: 0;
     font-size: 31px;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: -0.05em;
     color: #0D0D0D;
 }
@@ -2459,7 +2464,7 @@ h2, .heading {
     background: #FFFFFF;
     color: #555555;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 400;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -2502,13 +2507,13 @@ h2, .heading {
 
 .planner-day-label {
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.08em;
 }
 
 .planner-day-date {
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1;
 }
 
@@ -2533,7 +2538,7 @@ h2, .heading {
 .stats-summary-card h2 {
     margin: 0;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 400;
     line-height: 1.1;
     color: #0D0D0D;
 }
@@ -2542,7 +2547,7 @@ h2, .heading {
 .stats-section-header span,
 .stats-summary-footer {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
     color: #777777;
 }
 
@@ -2575,14 +2580,14 @@ h2, .heading {
 .planner-look-title {
     font-size: 20px;
     line-height: 1.05;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: -0.04em;
     color: #FFFFFF;
 }
 
 .planner-look-subtitle {
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.76);
 }
 
@@ -2600,7 +2605,7 @@ h2, .heading {
     background: rgba(255, 255, 255, 0.12);
     color: #FFFFFF;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 400;
     cursor: pointer;
 }
 
@@ -2661,7 +2666,7 @@ h2, .heading {
     margin: 0;
     font-size: 24px;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: -0.04em;
     color: #0D0D0D;
 }
@@ -2689,7 +2694,7 @@ h2, .heading {
     background: transparent;
     color: #777777;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 400;
     cursor: pointer;
 }
 
@@ -2759,7 +2764,7 @@ h2, .heading {
 
 .stats-bar-label {
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 400;
     color: #A0A0A0;
 }
 
@@ -2823,7 +2828,7 @@ h2, .heading {
     margin: 0;
     font-size: 16px;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.18em;
     color: #FFFFFF;
 }
@@ -2833,7 +2838,7 @@ h2, .heading {
     background: transparent;
     color: rgba(255, 255, 255, 0.56);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
     cursor: pointer;
 }
 
@@ -2923,7 +2928,7 @@ h2, .heading {
     background: rgba(255, 255, 255, 0.12);
     color: #FFFFFF;
     font-size: 10px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.12em;
     white-space: nowrap;
     backdrop-filter: blur(8px);
@@ -2950,7 +2955,7 @@ h2, .heading {
     justify-content: space-between;
     gap: 12px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.08em;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -2976,7 +2981,7 @@ h2, .heading {
     background: #FFFFFF;
     color: #0D0D0D;
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: -0.02em;
     cursor: pointer;
 }
@@ -3006,7 +3011,7 @@ h2, .heading {
     margin: 0;
     font-size: 20px;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: -0.04em;
     color: #0D0D0D;
 }
@@ -3047,7 +3052,7 @@ h2, .heading {
     align-items: center;
     justify-content: center;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.04em;
 }
 
@@ -3060,7 +3065,7 @@ h2, .heading {
     color: #0D0D0D;
     font-size: 31px;
     line-height: 1.05;
-    font-weight: 800;
+    font-weight: 400;
     letter-spacing: -0.05em;
 }
 
@@ -3073,7 +3078,7 @@ h2, .heading {
     color: #8B8B8B;
     font-size: 12px;
     line-height: 1.1;
-    font-weight: 700;
+    font-weight: 400;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-bottom: 14px;
@@ -3119,7 +3124,7 @@ h2, .heading {
     color: #0D0D0D;
     font-size: 13px;
     line-height: 1.15;
-    font-weight: 800;
+    font-weight: 400;
     letter-spacing: -0.03em;
 }
 
@@ -3139,7 +3144,7 @@ h2, .heading {
     align-items: center;
     justify-content: center;
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .profile-breakdown-card--add {
@@ -3164,7 +3169,7 @@ h2, .heading {
     color: #8B8B8B;
     font-size: 13px;
     line-height: 1.15;
-    font-weight: 700;
+    font-weight: 400;
     margin-top: auto;
 }
 
@@ -3182,7 +3187,7 @@ h2, .heading {
     color: #FFFFFF;
     font-size: 15px;
     line-height: 1;
-    font-weight: 700;
+    font-weight: 400;
     text-transform: uppercase;
     cursor: pointer;
     letter-spacing: -0.02em;
@@ -3207,3 +3212,25 @@ h2, .heading {
 
 .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
 .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+
+body,
+body * {
+    font-weight: 400 !important;
+}
+
+/* -- Agentation Annotator Overrides -- */
+#agentation-root {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+#agentation-root > * {
+    pointer-events: auto;
+}
+
+.discover-overlay-share--top-right { position: absolute; top: 14px; right: 14px; }

@@ -979,19 +979,18 @@ function DiscoverOutfitOverlay({ card, onClose }) {
           style={{
             backgroundImage: `url(${card.imageUrl})`,
             backgroundPosition: card.imagePosition,
+            position: 'relative',
           }}
         >
-          <button type="button" className="discover-overlay-icon discover-overlay-icon--left" onClick={onClose} aria-label="Close outfit details">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <polyline points="7 10 12 15 17 10" />
-            </svg>
+          <button type="button" className="discover-overlay-share" aria-label="Share outfit" style={{ position: 'absolute', bottom: 14, right: 14, background: 'rgba(255,255,255,0.9)', zIndex: 10 }}>
+            <ShareIcon />
           </button>
         </div>
 
         <div className="discover-overlay-body">
           <div className="discover-overlay-author-row">
             <div className="discover-author">
-              <div className="discover-author-avatar" />
+              <div className="discover-author-avatar" style={card.authorAvatar ? { backgroundImage: `url(${card.authorAvatar})` } : undefined} />
               <div className="discover-author-text">
                 <div className="discover-author-name">{card.author}</div>
                 <div className="discover-author-context">{card.context}</div>
@@ -999,20 +998,13 @@ function DiscoverOutfitOverlay({ card, onClose }) {
             </div>
             <button type="button" className="discover-overlay-follow">Follow</button>
           </div>
-          <div className="discover-overlay-title-row">
-            <h2 className="discover-overlay-title">{detail.title}</h2>
-            <button type="button" className="discover-overlay-share" aria-label="Share outfit">
-              <ShareIcon />
-            </button>
-          </div>
-
           <div className="discover-overlay-items-header">Items used</div>
           <div className="discover-overlay-items">
             {detail.items.map((item) => (
               <div key={item.id} className="discover-overlay-item-card">
                 <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})` }}>
-                  <button type="button" className="discover-overlay-item-plus" aria-label={`Add ${item.name}`}>
-                    +
+                  <button type="button" className="discover-overlay-item-plus" aria-label={`Save ${item.name}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ transform: 'scale(0.65)', display: 'flex' }}><BookmarkIcon dark /></div>
                   </button>
                 </div>
                 <div className="discover-overlay-item-brand">{item.brand}</div>

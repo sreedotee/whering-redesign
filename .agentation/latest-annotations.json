@@ -1,6 +1,29 @@
 {
+  "event": "annotation.add",
+  "timestamp": 1776586077844,
   "url": "http://localhost:5173/",
-  "pathname": "/",
-  "annotations": [],
-  "updatedAt": 1776524649657
+  "annotation": {
+    "id": "1776586077844",
+    "x": 64.82254697286012,
+    "y": 144,
+    "comment": "give me dialkit controls for the radius of the overlay too",
+    "element": "<App> <DiscoverScreen> discover overlay",
+    "elementPath": ".iphone-frame-bezel > #app-container > #home-screen > .discover-overlay",
+    "timestamp": 1776586077844,
+    "boundingBox": {
+      "x": 281,
+      "y": 54,
+      "width": 396,
+      "height": 850
+    },
+    "nearbyText": "",
+    "cssClasses": "discover-overlay",
+    "isFixed": false,
+    "fullPath": "body > div#root > div.device-presentation > div.iphone-frame > div.iphone-frame-bezel > div#app-container > main#home-screen > div.discover-overlay",
+    "accessibility": "",
+    "computedStyles": "color: rgb(13, 13, 13); background-color: rgba(83, 86, 98, 0.66); border-color: rgb(13, 13, 13); font-size: 18px; font-weight: 400; font-family: Outfit, system-ui, sans-serif; line-height: 24px; text-align: start; width: 396px; height: 850px; padding: 20px; border: 0px none rgb(13, 13, 13); display: flex; position: absolute; z-index: 20; flex-direction: row; justify-content: center; align-items: center; opacity: 1",
+    "nearbyElements": "div.discover-top-nav, div.discover-feed",
+    "reactComponents": "<App> <DiscoverScreen>",
+    "sourceFile": "src/App.jsx:2228:51"
+  }
 }
