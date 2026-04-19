@@ -872,6 +872,53 @@ function DialKitCopyButton() {
   );
 }
 
+// Prevents DialKit slider drags from bubbling up and moving the panel
+function DialKitDragFix() {
+  useEffect(() => {
+    const INTERACTIVE = 'input, [role="slider"], button, select, textarea';
+    const stop = (e) => e.stopPropagation();
+
+    function attach(root) {
+      root.querySelectorAll(INTERACTIVE).forEach((el) => {
+        el.removeEventListener('pointerdown', stop);
+        el.addEventListener('pointerdown', stop);
+      });
+    }
+
+    // Attach to any existing DialKit panels
+    document.querySelectorAll('[data-dialkit], [class*="dialkit"]').forEach(attach);
+
+    // Watch for DialKit panels added dynamically
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType === 1) {
+            const el = /** @type {Element} */ (node);
+            if (el.className && typeof el.className === 'string' && el.className.includes('dialkit')) {
+              attach(el);
+            }
+            el.querySelectorAll('[class*="dialkit"]').forEach(attach);
+          }
+        }
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Re-attach every 500ms as a fallback for late-mounting panels
+    const interval = setInterval(() => {
+      document.querySelectorAll('[class*="dialkit"]').forEach(attach);
+    }, 500);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
+  }, []);
+
+  return null;
+}
+
   function SparklesIcon({ active = false }) {
     return (
       <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -901,8 +948,9 @@ function ShareIcon() {
     </svg>
   );
 }
+function DiscoverCard({ card, onOpen, dials }) {
+  const { avatarSize, nameFontSize, nameLineHeight, contextFontSize, contextLineHeight, rowGap, authorTextGap, top, left, right, isBottom } = dials;
 
-function DiscoverCard({ card, onOpen }) {
   const cardClassName = [
     'discover-card',
     `discover-card--${card.type}`,
@@ -910,6 +958,16 @@ function DiscoverCard({ card, onOpen }) {
   ]
     .filter(Boolean)
     .join(' ');
+
+  const authorSection = (
+    <div className="discover-author" style={{ gap: rowGap }}>
+      <div className="discover-author-avatar" style={{ width: avatarSize, height: avatarSize, flexShrink: 0, ...(card.authorAvatar ? { backgroundImage: `url(${card.authorAvatar})` } : {}) }} />
+      <div className="discover-author-text">
+        <div className="discover-author-name" style={{ fontSize: nameFontSize, lineHeight: nameLineHeight, color: isBottom ? '#FAFAFA' : '#0D0D0D' }}>{card.author}</div>
+        <div className="discover-author-context" style={{ fontSize: contextFontSize, lineHeight: contextLineHeight, color: isBottom ? 'rgba(250, 250, 250, 0.8)' : '#8C8C8C' }}>{card.context}</div>
+      </div>
+    </div>
+  );
 
   return (
     <article
@@ -930,25 +988,17 @@ function DiscoverCard({ card, onOpen }) {
             backgroundPosition: `0% 0%, ${card.imagePosition}`,
           }}
         />
-        <div className="discover-card-top">
-          <div className="discover-author">
-            <div className="discover-author-avatar" />
-            <div className="discover-author-text">
-              <div className="discover-author-name">{card.author}</div>
-              <div className="discover-author-context">{card.context}</div>
-            </div>
+        {!isBottom && (
+          <div className="discover-card-top" style={{ top, left, right }}>
+            {authorSection}
+            {SHOW_DISCOVER_FOLLOW_CHIP ? (
+              <button className="discover-follow-chip" type="button">Follow</button>
+            ) : null}
           </div>
-          {SHOW_DISCOVER_FOLLOW_CHIP ? (
-            <button className="discover-follow-chip" type="button">Follow</button>
-          ) : null}
-        </div>
-        {card.type === 'item' ? (
-          <div className="discover-item-meta">
-            <div className="discover-item-title">{card.title}</div>
-            <div className="discover-item-subtitle">{card.subtitle}</div>
-          </div>
-        ) : null}
-        <div className="discover-card-actions discover-card-actions-overlay">
+        )}
+        {/* Removed redundant item meta for unified layout */}
+        <div className="discover-card-actions discover-card-actions-overlay" style={{ justifyContent: 'space-between', alignItems: 'flex-end', left, right, bottom: top }}>
+          {isBottom ? authorSection : <div />}
           <button
             className="discover-save-pill"
             type="button"
@@ -1058,32 +1108,40 @@ function DiscoverOutfitOverlay({ card, onClose }) {
             <button type="button" className="discover-overlay-follow" style={{ borderRadius: followBtn.radius, fontSize: followBtn.fontSize }}>Follow</button>
           </div>
 
-          <div className="discover-overlay-items-section" style={{ display: 'flex', flexDirection: 'column', gap: itemsTitleGap }}>
-            <div className="discover-overlay-items-header" style={{ fontSize: text.itemsHeader }}>Items used</div>
-            <div className="discover-overlay-items" style={{ gap: itemsGap }}>
-              {detail.items.map((item) => (
-                <div key={item.id} className="discover-overlay-item-card" style={{ gap: itemCardGap, width: itemCardWidth, minWidth: itemCardWidth }}>
-                  <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})`, borderRadius: itemRadius }}>
-                    <button type="button" className="discover-overlay-item-plus" aria-label={`Save ${item.name}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', bottom: itemSaveIcon.bottom, right: itemSaveIcon.right }}>
-                      <div style={{ transform: 'scale(0.65)', display: 'flex' }}><BookmarkIcon /></div>
-                    </button>
+
+          {card.type === 'outfit' && (
+            <div className="discover-overlay-items-section" style={{ display: 'flex', flexDirection: 'column', gap: itemsTitleGap }}>
+              <div className="discover-overlay-items-header" style={{ fontSize: text.itemsHeader }}>Items used</div>
+              <div className="discover-overlay-items" style={{ gap: itemsGap }}>
+                {detail.items.map((item) => (
+                  <div key={item.id} className="discover-overlay-item-card" style={{ gap: itemCardGap, width: itemCardWidth, minWidth: itemCardWidth }}>
+                    <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})`, borderRadius: itemRadius }}>
+                      <button type="button" className="discover-overlay-item-plus" aria-label={`Save ${item.name}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', bottom: itemSaveIcon.bottom, right: itemSaveIcon.right }}>
+                        <div style={{ transform: 'scale(0.65)', display: 'flex' }}><BookmarkIcon /></div>
+                      </button>
+                    </div>
+                    <div className="discover-overlay-item-brand" style={{ fontSize: text.itemBrand, lineHeight: text.itemBrandLineHeight }}>{item.brand}</div>
+                    <div className="discover-overlay-item-name" style={{ fontSize: text.itemName, lineHeight: text.itemNameLineHeight }}>{item.name}</div>
                   </div>
-                  <div className="discover-overlay-item-brand" style={{ fontSize: text.itemBrand, lineHeight: text.itemBrandLineHeight }}>{item.brand}</div>
-                  <div className="discover-overlay-item-name" style={{ fontSize: text.itemName, lineHeight: text.itemNameLineHeight }}>{item.name}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="discover-overlay-footer" style={{ paddingTop: footerPadTop, paddingBottom: footerPadBottom }}>
           <div className="discover-overlay-footer-copy">
-            <span style={{ fontSize: text.footerCount }}>{detail.includedCount} Items included</span>
-            <strong style={{ fontSize: text.footerCta }}>Style this Look</strong>
+            {card.type === 'outfit' && (
+              <>
+                <span style={{ fontSize: text.footerCount }}>{detail.includedCount} Items included</span>
+                <span style={{ fontSize: 10, opacity: 0.3 }}>•</span>
+              </>
+            )}
+            <strong style={{ fontSize: text.footerCta }}>{card.type === 'outfit' ? 'Style this Look' : 'Post Details'}</strong>
           </div>
           <button type="button" className="discover-overlay-cta" style={{ fontSize: ctaBtn.fontSize, borderRadius: ctaBtn.radius }}>
             <BookmarkIcon />
-            {detail.ctaLabel}
+            {card.type === 'outfit' ? detail.ctaLabel : 'Save post'}
           </button>
         </div>
       </div>
@@ -1096,6 +1154,20 @@ function DiscoverScreen({ activeDiscoverTab, onDiscoverTabChange, activeScreen }
   const leftColumnCards = discoverCards.filter((card) => card.column === 0);
   const rightColumnCards = discoverCards.filter((card) => card.column === 1);
 
+  const feedDials = useDialKit('Feed Card', {
+    avatarSize: [22, 16, 48],
+    nameFontSize: [10, 8, 20],
+    nameLineHeight: [1.2, 0.8, 2],
+    contextFontSize: [10, 8, 18],
+    contextLineHeight: [1.2, 0.8, 2],
+    rowGap: [4, 0, 24],
+    authorTextGap: [0, 0, 12],
+    top: [8, 0, 32],
+    left: [7, 0, 32],
+    right: [8, 0, 32],
+    isBottom: true,
+  });
+
   useEffect(() => {
     if (activeScreen !== 'home') {
       setActiveOutfitCard(null);
@@ -1107,7 +1179,7 @@ function DiscoverScreen({ activeDiscoverTab, onDiscoverTabChange, activeScreen }
       <div className="discover-top-nav">
         <div className="discover-tabs" role="tablist" aria-label="Discover tabs">
           <button className={`discover-tab${activeDiscoverTab === 'featured' ? ' is-active' : ''}`} type="button" onClick={() => onDiscoverTabChange('featured')}>
-            Featured
+            For You
           </button>
           <button className={`discover-tab${activeDiscoverTab === 'following' ? ' is-active' : ''}`} type="button" onClick={() => onDiscoverTabChange('following')}>
             Following
@@ -1122,7 +1194,8 @@ function DiscoverScreen({ activeDiscoverTab, onDiscoverTabChange, activeScreen }
             <DiscoverCard
               key={card.id}
               card={card}
-              onOpen={card.type === 'outfit' ? () => setActiveOutfitCard(card) : undefined}
+              onOpen={() => setActiveOutfitCard(card)}
+              dials={feedDials}
             />
           ))}
         </div>
@@ -1132,7 +1205,8 @@ function DiscoverScreen({ activeDiscoverTab, onDiscoverTabChange, activeScreen }
             <DiscoverCard
               key={card.id}
               card={card}
-              onOpen={card.type === 'outfit' ? () => setActiveOutfitCard(card) : undefined}
+              onOpen={() => setActiveOutfitCard(card)}
+              dials={feedDials}
             />
           ))}
         </div>
@@ -1204,23 +1278,31 @@ const inboxItems = [
     id: 1,
     title: 'New today',
     items: [
-      { id: 'n1', type: 'follow', name: 'Emma Rose', action: 'started following you.', time: '2 hours ago', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/464X8926HVCK2WWBTR75HE6K0D.jpg', hasButton: true },
-      { id: 'n2', type: 'save', name: 'Liam_O and 4 others', action: 'saved your Utility Jacket to their Wardrobe.', time: '5 hours ago', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/6AFQP7ZDH931DK59DMCZFB3033.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/665YP1TGMBQ3MGX5VMRNN1785H.jpg' },
-      { id: 'n3', type: 'stat', name: 'System', action: 'Your curated cluster "Autumn Core" reached 1k saves!', time: 'Yesterday', avatar: 'star', image: null }
+      { id: 'n1', type: 'follow', name: 'Emma Rose', action: 'started following you.', time: '2h', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/464X8926HVCK2WWBTR75HE6K0D.jpg', hasButton: true },
+      { id: 'n2', type: 'save', name: 'Liam_O and 4 others', action: 'saved your Utility Jacket to their Wardrobe.', time: '5h', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/6AFQP7ZDH931DK59DMCZFB3033.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/665YP1TGMBQ3MGX5VMRNN1785H.jpg' },
+      { id: 'n3', type: 'stat', name: 'System', action: 'Your curated cluster "Autumn Core" reached 1k saves!', time: '1d', avatar: 'star', image: null }
     ]
   },
   {
     id: 2,
     title: 'This week',
     items: [
-      { id: 'n4', type: 'cluster', name: 'Sarah Chen', action: 'curated a new cluster "Minimalist Essentials" matching your style profile.', time: 'Tuesday', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0TK6E061QN92FS4WCMBFZ6T84Q.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/63AKWZN3SG6NK7PV7HABKPGKBY.jpg' },
-      { id: 'n5', type: 'wishlist', name: 'David Mills', action: 'added your item to his cluster Wishlist 2026.', time: 'Monday', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/28AFFD2V1Q4A2G0TXPD524ZYHX.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3EM6C87RG55K3MCP8G3CD9V95Z.jpg' }
+      { id: 'n4', type: 'cluster', name: 'Sarah Chen', action: 'curated a new cluster "Minimalist Essentials" matching your style profile.', time: '5d', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0TK6E061QN92FS4WCMBFZ6T84Q.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/63AKWZN3SG6NK7PV7HABKPGKBY.jpg' },
+      { id: 'n5', type: 'wishlist', name: 'David Mills', action: 'added your item to his cluster Wishlist 2026.', time: '1w', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/28AFFD2V1Q4A2G0TXPD524ZYHX.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3EM6C87RG55K3MCP8G3CD9V95Z.jpg' }
     ]
   }
 ];
 
 function InboxScreen({ activeScreen }) {
   const [activeTab, setActiveTab] = useState('All');
+  // const { knob } = useDialKit();
+
+  // const followPaddingX = knob('Follow Btn Padding X', 10, { min: 4, max: 24 });
+  // const followPaddingY = knob('Follow Btn Padding Y', 5, { min: 2, max: 16 });
+  // const followRadius = knob('Follow Btn Radius', 6, { min: 0, max: 24 });
+  // const followBg = knob('Follow Btn Bg', '#F5F5F5');
+  // const followColor = knob('Follow Btn Text', '#0D0D0D');
+  // const followFontSize = knob('Follow Btn Font Size', 10, { min: 8, max: 16 });
 
   return (
     <main id="inbox-screen" className={`screen${activeScreen === 'inbox' ? ' active' : ''}`} data-tab="inbox">
@@ -1247,13 +1329,24 @@ function InboxScreen({ activeScreen }) {
                       {item.avatar === 'star' ? <span className="icon">★</span> : <img src={item.avatar} alt="" />}
                     </div>
                     <div className="inbox-content-text">
-                      <div className="inbox-action-line">
-                        <span className="name">{item.name}</span> {item.action}
+                      <div className="inbox-action-wrapper">
+                        <div className="inbox-action-line">
+                          <span className="name">{item.name}</span> {item.action} 
+                          {(item.name.length + item.action.length) <= 75 && (
+                            <span className="inbox-time-code"> {item.time}</span>
+                          )}
+                        </div>
+                        {(item.name.length + item.action.length) > 75 && (
+                          <span className="inbox-time-overlay">... {item.time}</span>
+                        )}
                       </div>
-                      <div className="inbox-time-code">{item.time}</div>
                     </div>
                     <div className="inbox-meta-col">
-                      {item.hasButton && <button className="inbox-follow-btn">Follow</button>}
+                      {item.hasButton && (
+                        <button className="inbox-follow-btn">
+                          <span className="inbox-follow-btn-text">Follow</span>
+                        </button>
+                      )}
                       {item.image && <div className="inbox-thumbnail" style={{ backgroundImage: `url(${item.image})` }}></div>}
                       {!item.hasButton && !item.image && <div className="inbox-placeholder-meta"></div>}
                     </div>
@@ -1272,6 +1365,38 @@ function InboxScreen({ activeScreen }) {
 function ExploreScreen({ activeScreen }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const heroContent = exploreHeroByCategory[activeCategory] ?? exploreHeroByCategory.All;
+  
+  const { search, hero, category, section, avatar } = useDialKit('Explore Screen', {
+    search: {
+      height: [40, 32, 60],
+      fontSize: [14, 10, 20],
+      padding: [16, 8, 32],
+    },
+    hero: {
+      height: [160, 100, 300],
+      titleSize: [16, 14, 32],
+      tagSize: [10.4, 8, 16],
+      padding: [16, 8, 32],
+    },
+    category: {
+      gap: [8, 0, 24],
+      paddingV: [6, 2, 16],
+      paddingH: [14, 4, 32],
+      fontSize: [13, 9, 18],
+    },
+    section: {
+      gap: [24, 8, 48],
+      titleSize: [16, 12, 24],
+      actionSize: [12, 9, 16],
+    },
+    avatar: {
+      size: [60, 36, 72],
+      nameSize: [11, 9, 14],
+      gap: [10, 6, 20],
+      labelGap: [2, 0, 14],
+    }
+  });
+
   const filteredBrands = activeCategory === 'All'
     ? topBrands
     : topBrands.filter((brand) => brand.category === activeCategory);
@@ -1287,32 +1412,29 @@ function ExploreScreen({ activeScreen }) {
     <main id="explore-screen" className={`screen${activeScreen === 'explore' ? ' active' : ''}`} data-tab="explore">
       <div className="explore-container">
         
-        <div className="explore-top-search">
-          <div className="search-input-pill">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="explore-top-search" style={{ paddingInline: search.padding }}>
+          <div className="search-input-pill" style={{ height: search.height }}>
+            <svg style={{ width: 14, height: 14 }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <span className="search-input-placeholder">Search styles, creators, brands...</span>
-            <div className="search-input-icon"></div>
+            <span className="search-input-placeholder" style={{ fontSize: search.fontSize }}>Search styles, creators, brands...</span>
+
           </div>
         </div>
 
-        <div className="explore-content">
-          <div className="explore-hero" style={{ backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%), url(${heroContent.image})` }}>
-            <div className="explore-hero-tag">{heroContent.tag}</div>
-            <div className="explore-hero-title">{heroContent.title}</div>
+        <div className="explore-content" style={{ paddingInline: hero.padding, gap: section.gap }}>
+          <div className="explore-hero" style={{ 
+            backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%), url(${heroContent.image})`,
+            height: hero.height,
+            padding: hero.padding,
+          }}>
+            <div className="explore-hero-title" style={{ fontSize: hero.titleSize }}>{heroContent.title}</div>
           </div>
 
-          <div className="horizontal-scroll-container">
+          <div className="horizontal-scroll-container" style={{ gap: category.gap }}>
             {exploreCategories.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                className={`category-pill ${activeCategory === cat ? 'active' : ''}`}
-                aria-pressed={activeCategory === cat}
-                onClick={() => setActiveCategory(cat)}
-              >
+              <button key={cat} type="button" className={`category-pill ${activeCategory === cat ? 'active' : ''}`} aria-pressed={activeCategory === cat} onClick={() => setActiveCategory(cat)} style={{ fontSize: category.fontSize, padding: `${category.paddingV}px ${category.paddingH}px` }}>
                 {cat}
               </button>
             ))}
@@ -1320,16 +1442,14 @@ function ExploreScreen({ activeScreen }) {
 
           <div className="explore-section">
             <div className="explore-section-header">
-              <div className="explore-section-title">Top Brands</div>
-              <div className="explore-section-action">See All</div>
+              <div className="explore-section-title" style={{ fontSize: section.titleSize }}>Top Brands</div>
+              <div className="explore-section-action" style={{ fontSize: section.actionSize }}>See All</div>
             </div>
-            <div className="horizontal-scroll-container">
+            <div className="horizontal-scroll-container" style={{ gap: avatar.gap }}>
               {filteredBrands.map((brand, idx) => (
                 <div key={idx} className="circle-item">
-                  <div className="circle-avatar" style={brand.style}>
-                    {brand.letter}
-                  </div>
-                  <div className="circle-name">{brand.name}</div>
+                  <div className="circle-avatar" style={{ ...brand.style, width: avatar.size, height: avatar.size }}>{brand.letter}</div>
+                  <div className="circle-name" style={{ fontSize: avatar.nameSize, width: avatar.size, marginTop: avatar.labelGap }}>{brand.name}</div>
                 </div>
               ))}
             </div>
@@ -1337,14 +1457,14 @@ function ExploreScreen({ activeScreen }) {
 
           <div className="explore-section">
             <div className="explore-section-header">
-              <div className="explore-section-title">Featured Curators</div>
-              <div className="explore-section-action">See All</div>
+              <div className="explore-section-title" style={{ fontSize: section.titleSize }}>Featured Curators</div>
+              <div className="explore-section-action" style={{ fontSize: section.actionSize }}>See All</div>
             </div>
-            <div className="horizontal-scroll-container">
+            <div className="horizontal-scroll-container" style={{ gap: avatar.gap }}>
               {filteredCurators.map((curator, idx) => (
                 <div key={idx} className="circle-item">
-                  <div className="circle-avatar" style={{ backgroundImage: `url(${curator.image})` }}></div>
-                  <div className="circle-name">{curator.name}</div>
+                  <div className="circle-avatar" style={{ backgroundImage: `url(${curator.image})`, width: avatar.size, height: avatar.size }}></div>
+                  <div className="circle-name" style={{ fontSize: avatar.nameSize, width: avatar.size, marginTop: avatar.labelGap }}>{curator.name}</div>
                 </div>
               ))}
             </div>
@@ -1352,10 +1472,10 @@ function ExploreScreen({ activeScreen }) {
 
           <div className="explore-section">
             <div className="explore-section-header">
-              <div className="explore-section-title">Trending Outfits</div>
-              <div className="explore-section-action">See All</div>
+              <div className="explore-section-title" style={{ fontSize: section.titleSize }}>Trending Outfits</div>
+              <div className="explore-section-action" style={{ fontSize: section.actionSize }}>See All</div>
             </div>
-            <div className="horizontal-scroll-container pb-xl">
+            <div className="horizontal-scroll-container" style={{ gap: avatar.gap }}>
               {filteredOutfits.map((outfit, idx) => (
                 <div key={idx} className="trending-outfit-card" style={ outfit.image ? { backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 50%), url(${outfit.image})` } : { background: outfit.bg } }>
                   <div className="trending-outfit-title">{outfit.title}</div>
@@ -1444,6 +1564,7 @@ function App() {
         </Suspense>
       </div>
       <DialRoot position="bottom-left" defaultOpen={false} />
+      <DialKitDragFix />
     </>
   );
 }

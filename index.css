@@ -18,7 +18,7 @@
 
     /* Typography */
     --font-display: "DM Serif Display", serif;
-    --font-body: "Outfit", sans-serif;
+    --font-body: "Inter", sans-serif;
     
     --font-size-64: 64px;
     --font-size-36: 36px;
@@ -240,7 +240,7 @@ body {
     --discover-gutter: 8px;
     background-color: #FFFFFF;
     color: #0D0D0D;
-    font-family: "Outfit", system-ui, sans-serif;
+    font-family: var(--font-body);
 }
 
 .discover-status-bar {
@@ -260,7 +260,7 @@ body {
 
 .discover-time {
     color: #000000;
-    font-family: "Outfit", system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 15px;
     line-height: 18px;
     font-weight: 400;
@@ -471,6 +471,9 @@ body {
     font-size: var(--discover-profile-name-size);
     line-height: var(--discover-profile-name-line);
     font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .discover-author-context {
@@ -478,6 +481,9 @@ body {
     font-size: var(--discover-profile-context-size);
     line-height: var(--discover-profile-context-line);
     font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .discover-follow-chip {
@@ -490,7 +496,7 @@ body {
     font-size: 9px;
     line-height: 11px;
     font-weight: 400;
-    font-family: "Outfit", system-ui, sans-serif;
+    font-family: var(--font-body);
     flex-shrink: 0;
 }
 
@@ -540,9 +546,7 @@ body {
     pointer-events: auto;
 }
 
-.discover-card--item .discover-card-actions {
-    display: none;
-}
+/* Actions enabled for all card types */
 
 .discover-save-pill,
 .discover-save-icon {
@@ -564,7 +568,7 @@ body {
     font-size: var(--discover-save-text-size);
     line-height: var(--discover-save-text-line);
     font-weight: 400;
-    font-family: "Outfit", system-ui, sans-serif;
+    font-family: var(--font-body);
 }
 
 .discover-save-icon {
@@ -787,9 +791,9 @@ body {
 
 .discover-overlay-footer-copy {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
 }
 
 .discover-overlay-footer-copy span {
@@ -902,7 +906,7 @@ body {
 
 .app-status-time {
     color: #000000;
-    font-family: "Outfit", system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 15px;
     line-height: 18px;
     font-weight: 400;
@@ -1398,38 +1402,8 @@ h2, .heading {
 .divider {
     height: 2px;
     background-color: var(--border-primary);
-    margin: 4px 0;
-}
-
-/* ── Explore Screen ── */
-#explore-screen.screen {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: calc(var(--app-bottom-nav-height) + 16px);
-    background-color: #FFFFFF;
-    color: #0D0D0D;
-    -webkit-overflow-scrolling: touch;
-    container-type: inline-size;
     --explore-page-margin: 16px;
     --explore-section-gap: 18px;
-    --explore-hero-height: 176px;
-    --explore-circle-size: 50px;
-    --explore-trending-card-width: 116px;
-}
-
-.explore-container {
-    display: flex;
-    flex-direction: column;
-    padding: calc(var(--app-status-bar-offset) + 12px) 0 28px 0;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    overflow-x: clip;
-}
-
-.explore-top-search {
-    padding: 0 var(--explore-page-margin) 12px;
-    position: sticky;
     top: var(--app-status-bar-offset);
     z-index: 10;
     background: rgba(255, 255, 255, 0.94);
@@ -1468,40 +1442,6 @@ h2, .heading {
 .search-input-icon {
     width: 16px;
     height: 16px;
-    border-radius: 5px;
-    background-color: #D4D4D4;
-    flex-shrink: 0;
-}
-
-.explore-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--explore-section-gap);
-    padding-inline: var(--explore-page-margin);
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    overflow-x: visible;
-    overflow-y: visible;
-    box-sizing: border-box;
-}
-
-.explore-section {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    overflow: visible;
-}
-
-.explore-hero {
-    height: var(--explore-hero-height);
-    border-radius: 8px;
-    background-image: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%), url('https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/665YP1TGMBQ3MGX5VMRNN1785H.jpg');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     padding: 12px;
 }
 
@@ -1586,133 +1526,193 @@ h2, .heading {
     color: #555555;
 }
 
-/* Brands & Curators */
-.circle-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-}
-.circle-avatar {
-    width: var(--explore-circle-size);
-    height: var(--explore-circle-size);
-    border-radius: calc(var(--explore-circle-size) / 2);
-    background-color: #F5F5F5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    font-weight: 400;
-    color: #0D0D0D;
-    background-size: cover;
-    background-position: center;
+.divider {
+    height: 2px;
+    background-color: var(--border-primary);
+    margin: 4px 0;
 }
 
-.circle-name {
-    font-size: 11px;
-    font-weight: 400;
-    color: #0D0D0D;
-    max-width: 58px;
-    text-align: center;
-    line-height: 1.2;
-}
-
-/* Trending Outfits */
-.trending-outfit-card {
-    width: var(--explore-trending-card-width);
-    height: 156px;
-    border-radius: 8px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
-    padding: 10px;
-    flex-shrink: 0;
-}
-.trending-outfit-title {
-    color: #FFFFFF;
-    font-size: 11px;
-    font-weight: 400;
-    line-height: 1.2;
-}
-
-.dialkit-copy-button {
-    position: fixed;
-    left: 18px;
-    bottom: 78px;
-    height: 34px;
-    padding: 0 14px;
-    border: 0;
-    border-radius: 999px;
-    background: rgba(13, 13, 13, 0.9);
-    color: #FAFAFA;
-    font-family: "Outfit", system-ui, sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    z-index: 1200;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
-}
-
-/* ── Studio Screen ── */
-#studio-screen.screen {
+/* ── Explore Screen ── */
+#explore-screen.screen {
+    overflow-y: auto;
+    overflow-x: clip;
+    padding-bottom: calc(var(--app-bottom-nav-height) + 16px);
     background-color: #FFFFFF;
+    color: #0D0D0D;
+    -webkit-overflow-scrolling: touch;
+    container-type: inline-size;
+    --explore-page-margin: 16px;
+    --explore-section-gap: 18px;
+    --explore-hero-height: 176px;
+    --explore-circle-size: 50px;
+    --explore-trending-card-width: 116px;
 }
 
-#studio-screen.screen.active {
+.explore-container {
     display: flex;
     flex-direction: column;
+    padding: calc(var(--app-status-bar-offset) + 12px) 0 28px 0;
+    width: 100%;
 }
 
-.studio-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding-top: var(--app-status-bar-offset, 64px);
-    padding-bottom: var(--app-bottom-nav-height);
+.explore-top-search {
+    padding: 6px var(--explore-page-margin) 12px;
+    position: sticky;
+    top: var(--app-status-bar-offset);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
 }
 
-.studio-header {
+.search-input-pill {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 10px 16px;
-    height: 48px;
+    background-color: #F5F5F5;
+    border: 1px solid #EAEAEA;
+    border-radius: 999px;
+    height: 42px;
+    padding: 0 13px;
+    gap: 9px;
+}
+
+.search-input-pill svg {
+    width: 18px;
+    height: 18px;
+    stroke: #A0A0A0;
     flex-shrink: 0;
 }
 
-.studio-credits {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background-color: #FFF4E6;
-    border: 1.5px solid #FFCD85;
-    padding: 4px 10px;
-    border-radius: 999px;
-    color: #E68A00;
+.search-input-placeholder {
+    color: #A0A0A0;
     font-size: 13px;
     font-weight: 400;
+    flex-grow: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.studio-canvas {
-    margin: 4px 16px;
-    height: 180px;
-    background-color: #F8F8F8;
-    border: 1.5px solid #EAEAEA;
-    border-radius: 20px;
+.search-input-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    background-color: #D4D4D4;
+    flex-shrink: 0;
+}
+
+.explore-content {
     display: flex;
+    flex-direction: column;
+    padding-inline: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.explore-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+}
+
+.explore-hero {
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.explore-hero-tag {
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.explore-hero-title {
+    color: #FFFFFF;
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.15;
+    max-width: 210px;
+}
+
+/* Horizontal Scroll sections */
+.horizontal-scroll-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    scrollbar-width: none;
+    box-sizing: border-box;
+}
+.horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+.horizontal-scroll-container.pb-xl {
+    padding-bottom: 24px;
+}
+
+/* Category Pills */
+.category-pill {
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 0;
+    background-color: #EEEEEE;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    cursor: pointer;
     flex-shrink: 0;
-    transition: height 0.2s ease;
+    transition: scale 150ms ease-out, background-color 150ms ease-out, color 150ms ease-out;
+}
+.category-pill:active {
+    scale: 0.96;
+}
+.category-pill.active {
+    background-color: #0D0D0D;
+    color: #FAFAFA;
+}
+
+/* Section Headers */
+.explore-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+}
+.explore-section-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: #0D0D0D;
+    line-height: 1.1;
+}
+.explore-section-action {
+    font-size: 12px;
+    font-weight: 400;
+    color: #555555;
 }
 
 .studio-canvas-placeholder {
     color: #828282;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     text-align: center;
     line-height: 1.4;
@@ -1838,22 +1838,25 @@ h2, .heading {
 }
 
 .inbox-header {
-    padding: 20px 16px 12px 16px;
+    padding: 20px 16px 0px 16px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 8px;
 }
 
 .inbox-title {
     font-size: 28px;
     font-weight: 400;
+    font-family: var(--font-body);
     color: #0D0D0D;
     letter-spacing: -0.5px;
+    margin: 0;
 }
 
 .inbox-tabs {
     display: flex;
     gap: 8px;
+    margin-bottom: 16px;
 }
 
 .inbox-tab-chip {
@@ -1882,15 +1885,17 @@ h2, .heading {
 .inbox-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .inbox-section-title {
-    padding-left: 16px;
+    padding: 0 16px;
+    margin: 0;
     font-size: 14px;
     font-weight: 400;
-    color: #0D0D0D;
+    color: #4F4F4F;
     text-transform: capitalize;
+    line-height: 1.35;
 }
 
 .inbox-list {
@@ -1901,7 +1906,7 @@ h2, .heading {
 .inbox-row {
     display: flex;
     padding: 10px 16px;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
     transition: background 0.2s ease;
 }
@@ -1911,9 +1916,9 @@ h2, .heading {
 }
 
 .inbox-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
     background-color: #F0F0F0;
@@ -1940,36 +1945,58 @@ h2, .heading {
 
 .inbox-content-text {
     flex-grow: 1;
+    margin-right: 8px; /* 8px padding + 8px row gap = 16px from square */
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 1px;
     min-width: 0;
 }
 
+.inbox-action-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .inbox-action-line {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.35;
     color: #333333;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    display: block;   /* Remove -webkit-box */
+    max-height: 2.7em; /* Limit to 2 lines */
     overflow: hidden;
 }
 
 .inbox-action-line .name {
-    font-weight: 400;
-    color: #0D0D0D;
+    font-weight: 600; /* Inter at 600 is very strong, 800 might be too thick but we can adjust */
+    color: #000000;
+    letter-spacing: -0.01em;
 }
 
 .inbox-time-code {
-    font-size: 10px;
-    color: #828282;
+    font-size: 13px;
+    color: #8E8E8E;
     font-weight: 400;
 }
 
+/* The absolute overlay hack for '...' and timestamp */
+.inbox-time-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 13px;
+    color: #8E8E8E;
+    background: #FFFFFF;
+    padding-left: 2px;
+}
+
+.inbox-row:active .inbox-time-overlay {
+    background: #F9F9F9;
+}
+
 .inbox-meta-col {
-    min-width: 52px;
-    height: 48px;
+    min-width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -1981,15 +2008,19 @@ h2, .heading {
     border-radius: 6px;
     background-color: #F5F5F5;
     color: #0D0D0D;
-    font-size: 10px;
     font-weight: 400;
     border: none;
     cursor: pointer;
 }
 
+.inbox-follow-btn-text {
+    font-size: 12px;
+    line-height: 12px;
+}
+
 .inbox-thumbnail {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 6px;
     background-size: cover;
     background-position: center;
@@ -1998,8 +2029,8 @@ h2, .heading {
 }
 
 .inbox-placeholder-meta {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     background-color: #000;
     border-radius: 6px;
     opacity: 0.05;
@@ -2096,7 +2127,7 @@ h2, .heading {
 
 .profile-name {
     margin: 0;
-    font-family: "Outfit", system-ui, sans-serif;
+    font-family: var(--font-body);
     font-size: 23px;
     font-weight: 400;
     color: #0D0D0D;
@@ -2348,6 +2379,54 @@ h2, .heading {
 
 .profile-menu-item:active {
     background: #F6F6F6;
+}
+
+.circle-avatar {
+    width: var(--explore-circle-size, 52px);
+    height: var(--explore-circle-size, 52px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #F8F8F8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 400;
+    color: #0D0D0D;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.06), 0px 1px 2px -1px rgba(0, 0, 0, 0.06);
+    outline: 1px solid rgba(0, 0, 0, 0.08);
+    outline-offset: -1px;
+    transition: scale 150ms ease-out;
+    overflow: hidden;
+}
+
+.circle-name {
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #0D0D0D;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.circle-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.circle-name {
+    margin-top: 6px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #0D0D0D;
+    text-align: center;
 }
 
 .profile-menu-icon {
@@ -3110,6 +3189,20 @@ h2, .heading {
     background: #F8F8F8;
 }
 
+.trending-outfit-card {
+    width: 140px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-size: cover;
+    background-position: center;
+    color: #FFFFFF;
+}
+
 .profile-breakdown-card-image,
 .profile-breakdown-add-box {
     width: 100%;
@@ -3236,3 +3329,44 @@ body * {
 }
 
 .discover-overlay-share--top-right { position: absolute; top: 14px; right: 14px; }
+
+
+/* Fix DialKit dragging conflict */
+/* DialKit Interaction Stabilizers */
+/* 1. Prevent dragging from starting inside controls */
+.dialkit-pane-root [role="slider"],
+.dialkit-pane-root input,
+.dialkit-pane-root select,
+.dialkit-pane-root button,
+.dialkit-pane-root [data-dialkit-control="slider"],
+.dialkit-pane-root [data-dialkit-control="knob"] {
+    touch-action: none !important;
+    pointer-events: auto !important;
+    user-select: none !important;
+    -webkit-user-drag: none !important;
+}
+
+/* 2. Target common Framer Motion / Motion handle patterns */
+.dialkit-pane-root [draggable="true"],
+.dialkit-pane-root div[style*="touch-action"] {
+    touch-action: auto; /* Allow drag on container */
+}
+
+/* 3. Re-enable drag ONLY on the header if it exists */
+.dialkit-pane-root .dialkit-header,
+.dialkit-pane-root .dialkit-panel-handle {
+    touch-action: pan-y pinch-zoom !important;
+    cursor: grab !important;
+}
+
+/* 4. Ensure the slider track itself doesn't trigger a move */
+.dialkit-slider-track,
+.dialkit-slider-thumb,
+.dialkit-knob-track {
+    cursor: ew-resize !important;
+}
+.dialkit-panel-root input,
+.dialkit-panel-root button {
+    cursor: pointer;
+    pointer-events: auto;
+}
