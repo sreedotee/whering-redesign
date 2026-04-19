@@ -965,12 +965,30 @@ function DiscoverCard({ card, onOpen }) {
 
 function DiscoverOutfitOverlay({ card, onClose }) {
   const detail = discoverOutfitDetails[card.id] ?? discoverOutfitDetails.default;
-  const { overlayRadius, authorGap, authorPad, itemsGap, itemRadius } = useDialKit('Discover Overlay', {
+  const { overlayRadius, authorGap, authorPad, itemsGap, itemRadius, authorAvatarSize, itemsTitleGap, itemCardGap, text } = useDialKit('Discover Overlay', {
     overlayRadius: [12, 0, 48],
-    authorGap:     [8,  0, 32],
+    authorGap:     [4,  0, 32],
     authorPad:     [0,  0, 24],
     itemsGap:      [8,  0, 32],
     itemRadius:    [4,  0, 32],
+    itemCardGap:   [4,  0, 16],
+    authorAvatarSize: [36, 24, 64],
+    itemsTitleGap: [8, 0, 32],
+    text: {
+      _collapsed: true,
+      authorName:    [14, 8, 24],
+      authorNameLineHeight: [1.4, 0.8, 2],
+      authorContext: [14, 8, 20],
+      authorContextLineHeight: [1.2, 0.8, 2],
+      authorTextGap: [0, 0, 16],
+      itemsHeader:   [16, 8, 24],
+      itemBrand:     [14, 8, 20],
+      itemBrandLineHeight: [1.1, 0.8, 2],
+      itemName:      [12, 8, 18],
+      itemNameLineHeight: [1.1, 0.8, 2],
+      footerCount:   [12, 8, 18],
+      footerCta:     [14, 8, 24],
+    },
   });
 
   return (
@@ -992,7 +1010,7 @@ function DiscoverOutfitOverlay({ card, onClose }) {
             position: 'relative',
           }}
         >
-          <button type="button" className="discover-overlay-share" aria-label="Share outfit" style={{ position: 'absolute', bottom: 14, right: 14, background: 'rgba(255,255,255,0.9)', zIndex: 10 }}>
+          <button type="button" className="discover-overlay-share" aria-label="Share outfit" style={{ position: 'absolute', bottom: 14, right: 14, background: 'none', zIndex: 10 }}>
             <ShareIcon />
           </button>
         </div>
@@ -1000,34 +1018,37 @@ function DiscoverOutfitOverlay({ card, onClose }) {
         <div className="discover-overlay-body">
           <div className="discover-overlay-author-row" style={{ gap: authorGap, padding: authorPad }}>
             <div className="discover-author">
-              <div className="discover-author-avatar" style={card.authorAvatar ? { backgroundImage: `url(${card.authorAvatar})` } : undefined} />
-              <div className="discover-author-text">
-                <div className="discover-author-name">{card.author}</div>
-                <div className="discover-author-context">{card.context}</div>
+              <div className="discover-author-avatar" style={{ width: authorAvatarSize, height: authorAvatarSize, flexShrink: 0, ...(card.authorAvatar ? { backgroundImage: `url(${card.authorAvatar})` } : {}) }} />
+              <div className="discover-author-text" style={{ gap: text.authorTextGap }}>
+                <div className="discover-author-name" style={{ fontSize: text.authorName, lineHeight: text.authorNameLineHeight }}>{card.author}</div>
+                <div className="discover-author-context" style={{ fontSize: text.authorContext, lineHeight: text.authorContextLineHeight }}>{card.context}</div>
               </div>
             </div>
             <button type="button" className="discover-overlay-follow">Follow</button>
           </div>
-          <div className="discover-overlay-items-header">Items used</div>
-          <div className="discover-overlay-items" style={{ gap: itemsGap }}>
-            {detail.items.map((item) => (
-              <div key={item.id} className="discover-overlay-item-card">
-                <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})`, borderRadius: itemRadius }}>
-                  <button type="button" className="discover-overlay-item-plus" aria-label={`Save ${item.name}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div style={{ transform: 'scale(0.65)', display: 'flex' }}><BookmarkIcon dark /></div>
-                  </button>
+
+          <div className="discover-overlay-items-section" style={{ display: 'flex', flexDirection: 'column', gap: itemsTitleGap }}>
+            <div className="discover-overlay-items-header" style={{ fontSize: text.itemsHeader }}>Items used</div>
+            <div className="discover-overlay-items" style={{ gap: itemsGap }}>
+              {detail.items.map((item) => (
+                <div key={item.id} className="discover-overlay-item-card" style={{ gap: itemCardGap }}>
+                  <div className="discover-overlay-item-image" style={{ backgroundImage: `url(${item.imageUrl})`, borderRadius: itemRadius }}>
+                    <button type="button" className="discover-overlay-item-plus" aria-label={`Save ${item.name}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none' }}>
+                      <div style={{ transform: 'scale(0.65)', display: 'flex' }}><BookmarkIcon dark /></div>
+                    </button>
+                  </div>
+                  <div className="discover-overlay-item-brand" style={{ fontSize: text.itemBrand, lineHeight: text.itemBrandLineHeight }}>{item.brand}</div>
+                  <div className="discover-overlay-item-name" style={{ fontSize: text.itemName, lineHeight: text.itemNameLineHeight }}>{item.name}</div>
                 </div>
-                <div className="discover-overlay-item-brand">{item.brand}</div>
-                <div className="discover-overlay-item-name">{item.name}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="discover-overlay-footer">
           <div className="discover-overlay-footer-copy">
-            <span>{detail.includedCount} Items included</span>
-            <strong>Style this Look</strong>
+            <span style={{ fontSize: text.footerCount }}>{detail.includedCount} Items included</span>
+            <strong style={{ fontSize: text.footerCta }}>Style this Look</strong>
           </div>
           <button type="button" className="discover-overlay-cta">
             <BookmarkIcon />
