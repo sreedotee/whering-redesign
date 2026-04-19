@@ -215,6 +215,41 @@ const profileGridImages = [
     { id: 'pg4', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/665YP1TGMBQ3MGX5VMRNN1785H.jpg', height: 260 },
 ];
 
+const profileMasonryCards = [
+  [
+    {
+      id: 'profile-item-jacket',
+      type: 'item',
+      height: 248,
+      imageUrl: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/7D1HHH5RCG8XVAA12V19WTGQTE.jpg',
+      badgeTone: 'light',
+    },
+    {
+      id: 'profile-outfit-gray',
+      type: 'outfit',
+      height: 186,
+      imageUrl: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/23GBWP1NZP5PT3PPPHQ37MWSCC.jpg',
+      badgeTone: 'dark',
+    },
+  ],
+  [
+    {
+      id: 'profile-item-placeholder',
+      type: 'item',
+      height: 186,
+      imageUrl: null,
+      badgeTone: 'light',
+    },
+    {
+      id: 'profile-outfit-tee',
+      type: 'outfit',
+      height: 248,
+      imageUrl: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/49WJKK4F9RKFK2377ZXAAQ0WTY.jpg',
+      badgeTone: 'dark',
+    },
+  ],
+];
+
 const studioItems = [
   { id: 's1', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/090GKJ4QA8ZEV32K3FX9JN08ZY.jpg' },
   { id: 's2', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3R9W71BZ7KA9WN09R6HNA6PTGH.jpg' },
@@ -639,6 +674,18 @@ function ProfileMainView({
           </div>
         </div>
 
+        <section className="profile-bio-section" aria-label="Profile summary">
+          <p className="profile-bio">attention is the interface</p>
+          <div className="profile-social-proof">
+            <div className="profile-follower-stack" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <span className="profile-follower-copy">4 followers · 4 following</span>
+          </div>
+        </section>
+
         <div className="profile-action-row">
           <button type="button" className="profile-edit-btn">Edit Profile</button>
           <button type="button" className="icon-btn-secondary">
@@ -652,29 +699,29 @@ function ProfileMainView({
         <div className="profile-tabs-section">
           <div className="profile-tabs">
             <button type="button" className={`profile-tab ${activeTab === 'All' ? 'active' : ''}`} onClick={() => onTabChange('All')}>All</button>
-            <button type="button" className={`profile-tab ${activeTab === 'Clusters' ? 'active' : ''}`} onClick={() => onTabChange('Clusters')}>Clusters</button>
-          </div>
-          <button type="button" className="grid-toggle-btn" aria-label="Grid view">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>
-          </button>
-        </div>
-
-        <div className="profile-filters-scroll">
-          <div className="profile-filter-segmented" role="tablist" aria-label="Profile content filter">
-            <button type="button" className={`pill-filter ${activeFilter === 'Items' ? 'active' : ''}`} onClick={() => onFilterChange('Items')}>Items</button>
-            <button type="button" className={`pill-filter ${activeFilter === 'Outfits' ? 'active' : ''}`} onClick={() => onFilterChange('Outfits')}>Outfits</button>
+            <button type="button" className={`profile-tab ${activeTab === 'Boards' ? 'active' : ''}`} onClick={() => onTabChange('Boards')}>Boards</button>
           </div>
         </div>
 
         <div className="profile-masonry-grid">
-          <div className="masonry-col">
-            <div className="masonry-item" style={{ height: `${profileGridImages[0].height}px`, backgroundImage: `url(${profileGridImages[0].url})` }} />
-            <div className="masonry-item" style={{ height: `${profileGridImages[2].height}px`, backgroundImage: `url(${profileGridImages[2].url})` }} />
-          </div>
-          <div className="masonry-col profile-masonry-offset">
-            <div className="masonry-item" style={{ height: `${profileGridImages[1].height}px`, backgroundImage: `url(${profileGridImages[1].url})` }} />
-            <div className="masonry-item masonry-item-placeholder" style={{ height: `${profileGridImages[3].height}px` }} />
-          </div>
+          {profileMasonryCards.map((column, columnIndex) => (
+            <div key={`profile-column-${columnIndex}`} className="masonry-col">
+              {column.map((card) => (
+                <article
+                  key={card.id}
+                  className={`masonry-item profile-paper-card${card.imageUrl ? '' : ' profile-paper-card--placeholder'}`}
+                  style={{
+                    height: `${card.height}px`,
+                    ...(card.imageUrl ? { backgroundImage: `url(${card.imageUrl})` } : {}),
+                  }}
+                >
+                  <span className={`profile-card-badge profile-card-badge--${card.badgeTone}`}>
+                    {card.type.toUpperCase()}
+                  </span>
+                </article>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
 
