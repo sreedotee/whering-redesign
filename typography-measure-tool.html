@@ -245,13 +245,14 @@
             border-radius: 6px;
             font-size: 12px;
             font-weight: 600;
-            z-index: 60;
+            z-index: 200;
             pointer-events: none;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 12px rgba(255, 42, 109, 0.4);
             white-space: nowrap;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
         }
         
         .distance-label::after {
@@ -265,7 +266,7 @@
         .distance-line {
             position: absolute;
             background: rgba(255, 42, 109, 0.6);
-            z-index: 59;
+            z-index: 199;
             pointer-events: none;
             display: flex;
             justify-content: space-between;
@@ -664,11 +665,11 @@
             const hRulers = rulers.filter(r => r.type === 'horizontal').sort((a,b) => a.pos - b.pos);
             
             for(let i=0; i<vRulers.length - 1; i++) {
-                drawDistanceLine(vRulers[i].pos, vRulers[i+1].pos, 'horizontal', 40);
+                drawDistanceLine(vRulers[i].pos, vRulers[i+1].pos, 'horizontal', 100);
             }
             
             for(let i=0; i<hRulers.length - 1; i++) {
-                drawDistanceLine(hRulers[i].pos, hRulers[i+1].pos, 'vertical', 40);
+                drawDistanceLine(hRulers[i].pos, hRulers[i+1].pos, 'vertical', 100);
             }
         }
 
@@ -701,7 +702,7 @@
             // Statically measure the rest of the same-axis rulers that aren't touching dragged ruler
             for(let i=0; i<sameAxisRulers.length - 1; i++) {
                 if (i !== rIndex - 1 && i !== rIndex) {
-                    drawDistanceLine(sameAxisRulers[i].pos, sameAxisRulers[i+1].pos, otherAxis, 40);
+                    drawDistanceLine(sameAxisRulers[i].pos, sameAxisRulers[i+1].pos, otherAxis, 100);
                 }
             }
         }
