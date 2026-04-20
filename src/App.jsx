@@ -1262,7 +1262,7 @@ function DiscoverOutfitOverlay({ card, onClose }) {
           </div>
           <button type="button" className="discover-overlay-cta" style={{ fontSize: ctaBtn.fontSize, borderRadius: ctaBtn.radius }}>
             <BookmarkIcon />
-            {card.type === 'outfit' ? detail.ctaLabel : 'Save post'}
+            {card.type === 'outfit' ? detail.ctaLabel : 'save item'}
           </button>
         </div>
       </div>
