@@ -1,31 +1,31 @@
 {
   "event": "annotations.clear",
-  "timestamp": 1776601695890,
+  "timestamp": 1776625762021,
   "url": "http://localhost:5173/",
   "annotations": [
     {
-      "id": "1776601682726",
-      "x": 57.51565762004175,
-      "y": 666,
-      "comment": "white bookmark is enough. no need of black circle behind it",
-      "element": "<App> <DiscoverScreen> <BookmarkIcon> icon",
-      "elementPath": ".discover-overlay-item-image > .discover-overlay-item-plus > div > svg",
-      "timestamp": 1776601682726,
+      "id": "1776625711536",
+      "x": 67.4321503131524,
+      "y": 321,
+      "comment": "give me dialkit coontrols for this",
+      "element": "<App> <InboxScreen> button \"Follow\"",
+      "elementPath": ".inbox-list > .inbox-row > .inbox-meta-col > .inbox-follow-btn",
+      "timestamp": 1776625711536,
       "boundingBox": {
-        "x": 540.9000244140625,
-        "y": 654.4937744140625,
-        "width": 18.199951171875,
-        "height": 18.199951171875
+        "x": 612.09375,
+        "y": 303.390625,
+        "width": 48.90625,
+        "height": 21
       },
-      "nearbyText": "",
-      "cssClasses": "",
+      "nearbyText": "Follow",
+      "cssClasses": "inbox-follow-btn",
       "isFixed": false,
-      "fullPath": "body > div#root > div.device-presentation > div.iphone-frame > div.iphone-frame-bezel > div#app-container > main#home-screen > div.discover-overlay > div.discover-overlay-card > div.discover-overlay-body > div.discover-overlay-items-section > div.discover-overlay-items > div.discover-overlay-item-card > div.discover-overlay-item-image > button.discover-overlay-item-plus > div > svg",
-      "accessibility": "aria-hidden",
-      "computedStyles": "color: rgb(255, 255, 255); border-color: rgb(255, 255, 255); font-size: 15px; font-weight: 400; font-family: Arial; line-height: 15px; text-align: center; width: 28px; height: 28px; border: 0px none rgb(255, 255, 255); display: block; flex-direction: row; opacity: 1; overflow: hidden",
+      "fullPath": "body > div#root > div.device-presentation > div.iphone-frame > div.iphone-frame-bezel > div#app-container > main#inbox-screen > div.inbox-container > section.inbox-scroll > div.inbox-section > div.inbox-list > div.inbox-row > div.inbox-meta-col > button.inbox-follow-btn",
+      "accessibility": "focusable",
+      "computedStyles": "color: rgb(13, 13, 13); background-color: rgb(245, 245, 245); border-color: rgb(13, 13, 13); font-size: 10px; font-weight: 400; font-family: Arial; text-align: center; width: 48.9062px; height: 21px; padding: 5px 10px; border: 0px none rgb(13, 13, 13); border-radius: 6px; display: block; flex-direction: row; opacity: 1",
       "nearbyElements": "",
-      "reactComponents": "<App> <DiscoverScreen> <BookmarkIcon>",
-      "sourceFile": "src/App.jsx:2326:51"
+      "reactComponents": "<App> <InboxScreen>",
+      "sourceFile": "src/App.jsx:2554:37"
     }
   ]
 }

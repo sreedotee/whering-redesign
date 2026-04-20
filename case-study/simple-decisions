@@ -1,0 +1,59 @@
+13 Design Decisions
+BEFORE
+
+Collections separate from All Items
+Prevents archive collapse and keeps intentional organization separate from passive saving
+
+Link paste as primary input
+Reduces input friction and speeds up item capture by matching existing behavior
+
+Preview then Add for first-time capture
+Removes save ambiguity and separates intake from organization
+
+Recently Added as Home entry point
+Keeps recent activity visible and helps users track what they’ve added
+
+Onboarding generates starter items
+Solves the cold start problem so users can try outfits immediately
+
+DURING
+
+Structured outfit logic (tops, bottoms, accessories)
+Reduces choice overload while keeping outputs coherent
+
+Smart pairing suggestions
+Shows relevant combinations at the right moment and increases cart value
+
+Show only generated outfit on canvas
+Keeps focus on the output and reduces visual clutter during evaluation
+
+Save, Share, Regenerate actions post-generation
+Supports key actions after generation without forcing immediate decisions
+
+AFTER
+
+To Buy as purchase layer
+Groups items for checkout and captures purchase intent
+
+Items used with direct purchase actions
+Connects generated outfits directly to buying without extra steps
+
+Keep all generated outfits reviewable
+Lets users revisit past outputs without losing options
+
+Alerts for price and stock changes
+Brings users back when items become available or cheaper
+
+SYSTEM
+
+Add vs All Items vs Collections vs Save Outfit
+Uses clear actions to separate capture, storage, and saving results
+
+Outfits reference items — no duplication
+Keeps items reusable and avoids inconsistent data
+
+Collections are not the archive
+Keeps organization intentional instead of mixing it with storage
+
+Defer model setup to first Try-On
+Avoids early friction by asking for photos only when needed

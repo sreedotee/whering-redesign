@@ -1,0 +1,93 @@
+{
+  "sectionName": "icons style",
+  "siteName": "www.deel.com",
+  "page": {
+    "title": "Global HR & Payroll Solutions | Deel Services",
+    "url": "https://www.deel.com/solutions/services/"
+  },
+  "element": {
+    "tagName": "img",
+    "id": "",
+    "className": "mui-ducv57",
+    "textPreview": "",
+    "selector": "div.relative > div.bg-surface-secondary.flex > div.MuiBox-root.mui-1quf9mf:nth-of-type(3) > div.MuiBox-root.mui-135koaa > div.MuiBox-root.mui-3lz68q:nth-of-type(2) > div.MuiBox-root.mui-pjjft1:nth-of-type(1) > div.MuiBox-root.mui-xr2rrk:nth-of-type(1) > img.mui-ducv57",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "__variable_74193b __variable_908ff8 __variable_87a0ac __variable_b5f81a __variable_182869 antialiased"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "main",
+        "id": "",
+        "className": "m-0 p-0"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "bg-surface-secondary flex flex-col items-center"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-1quf9mf"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-135koaa"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-3lz68q"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-pjjft1"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-xr2rrk"
+      },
+      {
+        "tagName": "img",
+        "id": "",
+        "className": "mui-ducv57"
+      }
+    ],
+    "friendlyName": "img.mui-ducv57"
+  },
+  "rect": {
+    "left": 296.5,
+    "top": 467.578125,
+    "width": 56,
+    "height": 56
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 2788,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 1,
+    "pseudoElementCount": 0,
+    "textNodeCount": 0
+  },
+  "capturedAt": "2026-04-06T18:57:06.178Z"
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>stats Preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 24px;
+        background: #e5e7eb;
+        color: #111827;
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 24px;
+      }
+      .meta {
+        margin: 0 0 18px;
+        color: #4b5563;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 18px;
+        align-items: start;
+      }
+      .card {
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 16px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+      }
+      .label {
+        margin: 0 0 10px;
+        color: #6b7280;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        background: white;
+      }
+      iframe {
+        width: 100%;
+        min-height: 640px;
+        border: 0;
+        border-radius: 12px;
+        background: white;
+      }
+      .notes {
+        margin-top: 16px;
+        color: #374151;
+        line-height: 1.5;
+      }
+      code {
+        font-family: Consolas, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>stats</h1>
+    <p class="meta">easehealth.com | Ease Health | AI-Native CRM, EHR &amp; RCM for Behavioral Health</p>
+    <div class="grid">
+      <section class="card">
+        <p class="label">Captured node screenshot</p>
+        <img src="node-screenshot.png" alt="Captured node screenshot">
+      </section>
+      <section class="card">
+        <p class="label">Reconstructed preview</p>
+        <iframe src="reconstructed.html" loading="lazy"></iframe>
+      </section>
+    </div>
+    <p class="notes">
+      Use <code>reconstructed.html</code> for fidelity-focused reconstruction and compare it against <code>node-screenshot.png</code>.
+      <code>outerHTML.html</code> is the raw DOM snapshot and is not sufficient by itself for high-fidelity visual rebuilds.
+    </p>
+  </body>
+</html>

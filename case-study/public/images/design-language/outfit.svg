@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#FAF9FA"/>
+  <!-- top -->
+  <path d="M65 50 L48 78 L65 83 L65 120 L135 120 L135 83 L152 78 L135 50 L118 62 C118 62 109 68 100 68 C91 68 82 62 82 62 Z" fill="#C8D8C8" opacity="0.65"/>
+  <!-- bottom / skirt -->
+  <path d="M68 118 L66 158 L100 163 L134 158 L132 118 Z" fill="#B8C8E0" opacity="0.6"/>
+  <!-- shoes -->
+  <ellipse cx="80" cy="170" rx="14" ry="7" fill="#9AA0B8" opacity="0.55"/>
+  <ellipse cx="120" cy="170" rx="14" ry="7" fill="#9AA0B8" opacity="0.55"/>
+  <!-- sparkle -->
+  <path d="M158 44 L161 52 L169 55 L161 58 L158 66 L155 58 L147 55 L155 52 Z" fill="#9A80B0" opacity="0.5"/>
+</svg>

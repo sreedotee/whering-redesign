@@ -1,0 +1,36 @@
+
+> whering-redesign@1.0.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  [32m[1mVITE[22m v5.4.19[39m  [2mready in [0m[1m373[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m1:07:59 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:11:44 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:12:44 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:14:42 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:14:55 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:23:44 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:24:09 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:28:19 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:28:34 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:46:51 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:47:31 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:51:02 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:51:02 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:51:27 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:52:56 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:53:49 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m1:56:48 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m1:58:17 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:01:52 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:06:57 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:07:53 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:13:46 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:14:07 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:14:13 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:18:43 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:18:49 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:19:05 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m
+[2m2:22:08 am[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/index.css[22m

@@ -1,0 +1,63 @@
+{
+  "sectionName": "purple gradient bg with my colours",
+  "siteName": "www.todesktop.com",
+  "page": {
+    "title": "ToDesktop",
+    "url": "https://www.todesktop.com/"
+  },
+  "element": {
+    "tagName": "div",
+    "id": "",
+    "className": "relative overflow-hidden rounded-32",
+    "textPreview": "Code OptionalConvert your web app into a desktop app withToDesktop BuilderOur visual UI will take your existing web app and turn it into a c",
+    "selector": "html > body > section.py-56.md\\:py-120:nth-of-type(7) > div.mx-auto.lg\\:max-w-\\[1128px\\] > div.relative.overflow-hidden",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "section",
+        "id": "builder-cta",
+        "className": "py-56 md:py-120 px-8 isolate overflow-hidden is-visible"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "mx-auto  lg:max-w-[1128px]"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative overflow-hidden rounded-32"
+      }
+    ],
+    "friendlyName": "div.relative.overflow-hidden"
+  },
+  "rect": {
+    "left": 392,
+    "top": 239,
+    "width": 1128,
+    "height": 518
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 10400,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 46,
+    "pseudoElementCount": 0,
+    "textNodeCount": 11
+  },
+  "capturedAt": "2026-04-06T19:04:59.253Z"
+}

@@ -1,0 +1,93 @@
+{
+  "sectionName": "interview results format",
+  "siteName": "www.deel.com",
+  "page": {
+    "title": "Improve Employee Benefits in 100+ Countries | Deel Benefits",
+    "url": "https://www.deel.com/solutions/benefits/"
+  },
+  "element": {
+    "tagName": "img",
+    "id": "",
+    "className": "mui-ducv57",
+    "textPreview": "",
+    "selector": "div.relative > div.bg-surface-secondary.flex > div.MuiBox-root.mui-aiaenv:nth-of-type(2) > div.MuiBox-root.mui-166kxjt > div.MuiBox-root.mui-1pu0e0i:nth-of-type(2) > div.MuiBox-root.mui-1iutxri:nth-of-type(6) > div.MuiBox-root.mui-192i1o3:nth-of-type(2) > img.mui-ducv57",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "__variable_74193b __variable_908ff8 __variable_87a0ac __variable_b5f81a __variable_182869 antialiased"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "main",
+        "id": "",
+        "className": "m-0 p-0"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "bg-surface-secondary flex flex-col items-center"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-aiaenv"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-166kxjt"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-1pu0e0i"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-1iutxri"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "MuiBox-root mui-192i1o3"
+      },
+      {
+        "tagName": "img",
+        "id": "",
+        "className": "mui-ducv57"
+      }
+    ],
+    "friendlyName": "img.mui-ducv57"
+  },
+  "rect": {
+    "left": 1225.5,
+    "top": 385.96875,
+    "width": 350,
+    "height": 219
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 1756,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 1,
+    "pseudoElementCount": 0,
+    "textNodeCount": 0
+  },
+  "capturedAt": "2026-04-06T18:58:15.165Z"
+}

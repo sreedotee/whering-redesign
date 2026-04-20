@@ -1,0 +1,88 @@
+{
+  "sectionName": "card quote",
+  "siteName": "www.todesktop.com",
+  "page": {
+    "title": "ToDesktop Builder - Web app to desktop app in minutes",
+    "url": "https://www.todesktop.com/builder"
+  },
+  "element": {
+    "tagName": "div",
+    "id": "",
+    "className": "flex h-full flex-col justify-between gap-6 rounded-2xl-inner bg-gradient-to-br from-zinc-50 to-zinc-100 p-8 hover:from-theme-red-light hover:via-theme-purple-light hover:to-theme-yellow-light lg:gap-10 lg:p-10",
+    "textPreview": "Native APIs “What sets ToDesktop apart is its seamless integration with native APIs using our existing web codebase. By tapping into APIs li",
+    "selector": "astro-island > div.isolate.bg-white > div.relative.px-6:nth-of-type(7) > div.mx-auto.max-w-7xl > div.flex.flex-col > div.flex.flex-col > div.rounded-2xl.bg-zinc-200:nth-of-type(1) > div.flex.h-full",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "astro-island",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "isolate bg-white"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative px-6 lg:px-8 px-6 lg:px-8"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "mx-auto max-w-7xl pt-12 pb-12 sm:pt-20 sm:pb-20 "
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "flex flex-col gap-12"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "flex flex-col gap-4 lg:flex-row"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "rounded-2xl bg-zinc-200 hover:bg-gradient-to-br hover:from-theme-red hover:via-theme-purple hover:to-theme-yellow lg:w-1/3"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "flex h-full flex-col justify-between gap-6 rounded-2xl-inner bg-gradient-to-br from-zinc-50 to-zinc-100 p-8 hover:from-theme-red-light hover:via-theme-purple-light hover:to-theme-yellow-light lg:gap-10 lg:p-10"
+      }
+    ],
+    "friendlyName": "div.flex.h-full"
+  },
+  "rect": {
+    "left": 313.5,
+    "top": 245.640625,
+    "width": 414,
+    "height": 500
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 4127,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 26,
+    "pseudoElementCount": 0,
+    "textNodeCount": 17
+  },
+  "capturedAt": "2026-04-06T19:03:58.226Z"
+}

@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #1F1F1F;
+  --width-standard: 1375px;
+  --width-reading: 900px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --color-plum: #3D2B4C;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #1F1F1F;
+  --color-text-secondary: #6B6B6B;
+  --color-text-tertiary: #707070;
+  --color-gray-200: #E8E5E6;
+  --color-error: #DC2626;
+  --micro-size: 11px;
+
+  /* ── Typography system (Paper reference) ── */
+  --heading-font: var(--font-sans);
+  --body-font: var(--font-sans);
+  --heading-weight: 600;
+}
+
+.dark {
+  --background: #1a1520;
+  --foreground: #FAF9FA;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  color: #1F1F1F;
+  background: #FFFFFF;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* All elements use Inter */
+*, h1, h2, h3 {
+  font-family: var(--font-sans);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .section-padding {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .container-width {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .container-standard {
+    max-width: var(--width-standard);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
+  }
+
+  .container-reading {
+    max-width: var(--width-reading);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    width: 100%;
+  }
+}
+
+/* Sticky note styles */
+.sticky-note {
+  background: linear-gradient(135deg, #F7F0C8, #F2E88A);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #E8D87A;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.sticky-note:hover {
+  box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+/* Whiteboard background */
+.whiteboard-bg {
+  background-color: #f8f8f8;
+  background-image:
+    linear-gradient(#e0e0e0 1px, transparent 1px),
+    linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ── New Semantic Hierarchy ────────────────────────────────── */
+
+/* 1. Narrative Content (Outside Cards) */
+.narrative-microlabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #3D2B4C;
+  opacity: 0.6;
+}
+
+.narrative-section-heading {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1F1F1F;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.narrative-para-heading {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #1F1F1F;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #1F1F1F;
+  letter-spacing: -0.04em;
+}
+
+.narrative-body {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: #5C5759;
+}
+
+.narrative-body-bold {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.75;
+  color: #1F1F1F;
+}
+
+/* 2. Card-Level Content */
+.card-heading {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1F1F1F;
+  letter-spacing: -0.01em;
+}
+
+.card-body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #6B6B6B;
+}
+
+.card-microlabel {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #3D2B4C;
+  opacity: 0.5;
+}
+
+.card-supporting {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #7D767A;
+}
+
+/* ── Legacy Typography (Mapping to new system) ─────────────── */
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-200);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* Range slider thumb — TypographyPanel */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3D2B4C;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(61,43,76,0.35);
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #3D2B4C;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(61,43,76,0.35);
+  cursor: pointer;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Dark mode overrides */
+.dark .whiteboard-bg {
+  background-color: #2a2030;
+  background-image:
+    linear-gradient(#3d3450 1px, transparent 1px),
+    linear-gradient(90deg, #3d3450 1px, transparent 1px);
+}
+
+.dark .sticky-note {
+  background: linear-gradient(135deg, #4a4000, #5a5000);
+  border-color: #6a6000;
+}
+
+.dark .sticky-note span {
+  color: #FFF9C4;
+}

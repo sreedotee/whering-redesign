@@ -1,0 +1,103 @@
+{
+  "sectionName": "stats",
+  "siteName": "easehealth.com",
+  "page": {
+    "title": "Ease Health | AI-Native CRM, EHR & RCM for Behavioral Health",
+    "url": "https://easehealth.com/"
+  },
+  "element": {
+    "tagName": "a",
+    "id": "",
+    "className": "featured-case-grid w-inline-block",
+    "textPreview": "“Clinical documentation has always been the part everyone dreads; Ease finally took that pain off our plate.”Dr. Richard Hoffman, PhDClinica",
+    "selector": "div.padding-global > div.container-large > div.padding-section-large > div.case-studies-component > div.featured-case-wrapper.w-dyn-list:nth-of-type(2) > div.featured-case-list.w-dyn-items > div.featured-case-item.w-dyn-item > a.featured-case-grid.w-inline-block",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "eh-js w-mod-js w-mod-ix3 reveal-js lenis"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": "font-sans text-[#0f3e17] antialiased bg-[#fffefc] selection:bg-[#0f3e17] selection:text-white"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "main",
+        "id": "",
+        "className": "main-wrapper"
+      },
+      {
+        "tagName": "section",
+        "id": "",
+        "className": "section_case-studies"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "padding-global"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "container-large"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "padding-section-large"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "case-studies-component"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "featured-case-wrapper w-dyn-list"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "featured-case-list w-dyn-items"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "featured-case-item w-dyn-item"
+      },
+      {
+        "tagName": "a",
+        "id": "",
+        "className": "featured-case-grid w-inline-block"
+      }
+    ],
+    "friendlyName": "a.featured-case-grid.w-inline-block"
+  },
+  "rect": {
+    "left": 227.375,
+    "top": 344.84375,
+    "width": 1450.234375,
+    "height": 580.96875
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 9930,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 36,
+    "pseudoElementCount": 4,
+    "textNodeCount": 14
+  },
+  "capturedAt": "2026-04-06T18:53:55.052Z"
+}

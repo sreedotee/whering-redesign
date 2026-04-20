@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#FAF9FA"/>
+  <!-- heart -->
+  <path d="M100 155 C100 155 44 118 44 80 C44 62 58 50 74 50 C85 50 95 57 100 65 C105 57 115 50 126 50 C142 50 156 62 156 80 C156 118 100 155 100 155Z" fill="#D4A8B8" opacity="0.55"/>
+  <path d="M100 155 C100 155 44 118 44 80 C44 62 58 50 74 50 C85 50 95 57 100 65 C105 57 115 50 126 50 C142 50 156 62 156 80 C156 118 100 155 100 155Z" fill="none" stroke="#B88098" stroke-width="2" opacity="0.4"/>
+  <!-- small items hint -->
+  <circle cx="78" cy="82" r="8" fill="#F0E8EE" opacity="0.7"/>
+  <circle cx="100" cy="88" r="8" fill="#F0E8EE" opacity="0.7"/>
+  <circle cx="122" cy="82" r="8" fill="#F0E8EE" opacity="0.7"/>
+</svg>

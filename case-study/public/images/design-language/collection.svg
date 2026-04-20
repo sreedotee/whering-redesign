@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#FAF9FA"/>
+  <!-- folder stack -->
+  <rect x="44" y="72" width="112" height="84" rx="8" fill="#C8B8D8" opacity="0.4"/>
+  <rect x="44" y="64" width="60" height="12" rx="4 4 0 0" fill="#B8A0CC" opacity="0.5"/>
+  <rect x="38" y="76" width="112" height="80" rx="8" fill="#C8B8D8" opacity="0.55"/>
+  <!-- items inside -->
+  <rect x="52" y="92" width="36" height="44" rx="5" fill="#F0EBF5" opacity="0.8"/>
+  <rect x="94" y="92" width="36" height="44" rx="5" fill="#F0EBF5" opacity="0.8"/>
+  <rect x="73" y="86" width="36" height="44" rx="5" fill="#EAE2F2" opacity="0.9" stroke="#C8B8D8" stroke-width="1"/>
+</svg>

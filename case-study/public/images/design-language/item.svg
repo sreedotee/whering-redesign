@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#FAF9FA"/>
+  <!-- simple clothing item: t-shirt silhouette -->
+  <path d="M60 60 L40 90 L60 96 L60 150 L140 150 L140 96 L160 90 L140 60 L120 74 C120 74 110 80 100 80 C90 80 80 74 80 74 Z" fill="#C8B8D8" opacity="0.6"/>
+  <path d="M60 60 L40 90 L60 96 L60 150 L140 150 L140 96 L160 90 L140 60 L120 74 C120 74 110 80 100 80 C90 80 80 74 80 74 Z" fill="none" stroke="#9A80B0" stroke-width="2" opacity="0.5"/>
+</svg>

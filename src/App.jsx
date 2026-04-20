@@ -251,18 +251,33 @@ const profileMasonryCards = [
 ];
 
 const studioItems = [
-  { id: 's1', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/090GKJ4QA8ZEV32K3FX9JN08ZY.jpg' },
-  { id: 's2', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3R9W71BZ7KA9WN09R6HNA6PTGH.jpg' },
-  { id: 's3', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/5DGAVH8PFY2FR0BPGF9K8VDTS8.jpg' },
-  { id: 's4', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/6T0PMEQDJ18KBJ4BEG6EF0JK4Z.jpg' },
-  { id: 's5', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/7QWK2RNATR35Q4ZQ2XCA1Z1C96.jpg' },
-  { id: 's6', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0P4Q226RN1C07JXQCWVCDDKY17.jpg' },
+  { id: 's1', category: 'Tops', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/090GKJ4QA8ZEV32K3FX9JN08ZY.jpg' },
+  { id: 's2', category: 'Outerwear', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3R9W71BZ7KA9WN09R6HNA6PTGH.jpg' },
+  { id: 's3', category: 'Tops', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/5DGAVH8PFY2FR0BPGF9K8VDTS8.jpg' },
+  { id: 's4', category: 'Footwear', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/6T0PMEQDJ18KBJ4BEG6EF0JK4Z.jpg' },
+  { id: 's5', category: 'Bottoms', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/7QWK2RNATR35Q4ZQ2XCA1Z1C96.jpg' },
+  { id: 's6', category: 'Accessories', url: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0P4Q226RN1C07JXQCWVCDDKY17.jpg' },
 ];
 
 
 
 function StudioScreen({ activeScreen }) {
   const [activeCategory, setActiveCategory] = useState('Tops');
+  const [selectedItems, setSelectedItems] = useState({});
+  const visibleItems = studioItems.filter((item) => item.category === activeCategory);
+  const checkmarkOffset = { right: 4, bottom: 4 };
+
+  const handleItemSelect = (item) => {
+    setSelectedItems((current) => ({
+      ...current,
+      [item.category]: item.id,
+    }));
+  };
+
+  const handleCreateOutfit = () => {
+    const chosen = Object.values(selectedItems);
+    if (chosen.length === 0) return;
+  };
 
   return (
     <main id="studio-screen" className={`screen${activeScreen === 'studio' ? ' active' : ''}`} data-tab="studio">
@@ -283,7 +298,7 @@ function StudioScreen({ activeScreen }) {
                 </div>
             </div>
 
-            <div className="studio-categories-bar" style={{ gap: 'var(--studio-pill-gap)' }}>
+            <div className="studio-categories-bar">
                 {['Tops', 'Bottoms', 'Outerwear', 'Footwear', 'Accessories'].map(cat => (
                     <button 
                         key={cat} 
@@ -296,20 +311,48 @@ function StudioScreen({ activeScreen }) {
             </div>
 
             <div className="studio-recent-filter">
-                <span>Recently Added</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M6 9l6 6 6-6" /></svg>
+                <button type="button" className="studio-sort-pill">
+                    <span>Recently Added</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M6 9l6 6 6-6" /></svg>
+                </button>
             </div>
 
             <div className="studio-grid-scroll">
-                <div className="studio-grid" style={{ gridTemplateColumns: `repeat(var(--studio-grid-cols), 1fr)` }}>
-                    {studioItems.map((item) => (
-                        <div key={item.id} className="studio-item-card" style={{ backgroundImage: `url(${item.url})` }} />
-                    ))}
+                <div className="studio-grid">
+                    {visibleItems.map((item) => {
+                        const isSelected = selectedItems[item.category] === item.id;
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            className={`studio-item-card${isSelected ? ' is-selected' : ''}`}
+                            style={{ backgroundImage: `url(${item.url})` }}
+                            onClick={() => handleItemSelect(item)}
+                            aria-pressed={isSelected}
+                            aria-label={`${item.category} item`}
+                          >
+                            {isSelected && (
+                              <span
+                                className="studio-item-check"
+                                aria-hidden="true"
+                                style={{ right: checkmarkOffset.right, bottom: checkmarkOffset.bottom }}
+                              >
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M20 6 9 17l-5-5" />
+                                </svg>
+                              </span>
+                            )}
+                          </button>
+                        );
+                    })}
+                    {visibleItems.length === 0 && (
+                      <div className="studio-empty-state">No items in this category yet.</div>
+                    )}
                 </div>
             </div>
 
             <div className="studio-footer-actions">
-                <button className="studio-create-btn shadow-lg">
+                <button className="studio-create-btn shadow-lg" onClick={handleCreateOutfit}>
                     Create outfit
                 </button>
             </div>
@@ -545,13 +588,14 @@ function ProfileStatsView({ onBack }) {
 }
 
 function ProfileAiEnhancerView({ onBack, onComplete }) {
+  const enhancerProgressWidth = 84;
+
   return (
     <div className="profile-subscreen profile-enhancer-view">
       <header className="enhancer-header">
         <button type="button" className="profile-back-button profile-back-button--dark" onClick={onBack} aria-label="Back to profile">
           <BackChevronIcon />
         </button>
-        <h1 className="enhancer-title">AI ENHANCER</h1>
         <button type="button" className="enhancer-skip" onClick={onBack}>Skip</button>
       </header>
 
@@ -563,17 +607,15 @@ function ProfileAiEnhancerView({ onBack, onComplete }) {
           <span className="enhancer-corner enhancer-corner--bl" />
           <span className="enhancer-corner enhancer-corner--br" />
           <div className="enhancer-scan-line" />
-          <div className="enhancer-badge enhancer-badge--top">EXTRACTING TEXTURE...</div>
-          <div className="enhancer-badge enhancer-badge--bottom">ALBEDO NORMALIZED</div>
         </div>
       </div>
 
       <footer className="enhancer-footer">
         <div className="enhancer-progress-copy">
-          <span>EDGE SMOOTHING</span>
-          <span>84%</span>
+          <span>Uploading</span>
+          <span>{enhancerProgressWidth}%</span>
         </div>
-        <div className="enhancer-progress-track">
+        <div className="enhancer-progress-track" style={{ width: `${enhancerProgressWidth}%` }}>
           <div className="enhancer-progress-fill" style={{ width: '84%' }} />
         </div>
         <button type="button" className="enhancer-complete-button" onClick={onComplete}>
@@ -591,13 +633,11 @@ function ProfileOutfitBreakdownView({ onBack, onSave }) {
         <button type="button" className="profile-back-button profile-back-button--ghost" onClick={onBack} aria-label="Back to profile">
           <BackChevronIcon />
         </button>
-        <h1 className="profile-breakdown-title">Outfit Breakdown</h1>
         <div className="profile-breakdown-spacer" />
       </header>
 
       <section className="profile-breakdown-hero">
         <div className="profile-breakdown-image" style={{ backgroundImage: `url(${profileGridImages[0].url})` }} />
-        <span className="profile-breakdown-badge">OUTFIT</span>
       </section>
 
       <section className="profile-breakdown-summary">
@@ -605,26 +645,14 @@ function ProfileOutfitBreakdownView({ onBack, onSave }) {
       </section>
 
       <section className="profile-breakdown-items">
-        <div className="profile-breakdown-label">Items Detected</div>
+        <div className="profile-breakdown-label">Items detected</div>
         <div className="profile-breakdown-cards">
           {detectedOutfitItems.map((item) => (
             <article key={item.id} className="profile-breakdown-card">
               <div className="profile-breakdown-card-image" style={{ backgroundImage: `url(${item.imageUrl})` }} />
               <div className="profile-breakdown-card-title">{item.title}</div>
-              <div className="profile-breakdown-tags">
-                {item.tags.map((tag) => (
-                  <span key={`${item.id}-${tag}`} className="profile-breakdown-tag">{tag}</span>
-                ))}
-              </div>
             </article>
           ))}
-
-          <article className="profile-breakdown-card profile-breakdown-card--add">
-            <div className="profile-breakdown-add-box">
-              <span className="profile-breakdown-add-plus">+</span>
-            </div>
-            <div className="profile-breakdown-add-text">Add Item</div>
-          </article>
         </div>
       </section>
 
@@ -646,13 +674,29 @@ function ProfileMainView({
   onCalendarOpen,
   onStatsOpen,
   onFabToggle,
+  fabPosition,
 }) {
+  const showDetailFilters = activeTab === 'All';
+  const visibleColumns = profileMasonryCards.map((column) =>
+    column.map((card) => {
+      const isVisible = activeTab === 'Boards'
+        ? card.type === 'outfit'
+        : activeFilter === 'Items'
+          ? card.type === 'item'
+          : activeFilter === 'Outfits'
+            ? card.type === 'outfit'
+            : true;
+
+      return { ...card, isVisible };
+    }),
+  );
+
   return (
     <>
       <div className={`profile-scroll-container${isFabOpen ? ' is-dimmed' : ''}`}>
         <header className="profile-top-actions">
-          <button type="button" className="icon-action-btn shadow-sm">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
+          <button type="button" className="icon-action-btn shadow-sm" aria-label="Share profile">
+            <ShareIcon dark />
           </button>
           <div className="right-group">
             <button type="button" className="icon-action-btn shadow-sm" onClick={onCalendarOpen} aria-label="Open planner">
@@ -689,7 +733,7 @@ function ProfileMainView({
         <div className="profile-action-row">
           <button type="button" className="profile-edit-btn">Edit Profile</button>
           <button type="button" className="icon-btn-secondary">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" /></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
           </button>
           <button type="button" className="icon-btn-secondary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
@@ -703,17 +747,35 @@ function ProfileMainView({
           </div>
         </div>
 
+        {showDetailFilters && (
+          <div className="profile-filters-scroll" role="tablist" aria-label="Profile content filters">
+            <div className="profile-filter-segmented">
+              {['Items', 'Outfits'].map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  className={`pill-filter ${activeFilter === filter ? 'active' : ''}`}
+                  onClick={() => onFilterChange(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="profile-masonry-grid">
-          {profileMasonryCards.map((column, columnIndex) => (
+          {visibleColumns.map((column, columnIndex) => (
             <div key={`profile-column-${columnIndex}`} className="masonry-col">
               {column.map((card) => (
                 <article
                   key={card.id}
-                  className={`masonry-item profile-paper-card${card.imageUrl ? '' : ' profile-paper-card--placeholder'}`}
+                  className={`masonry-item profile-paper-card${card.imageUrl ? '' : ' profile-paper-card--placeholder'}${card.isVisible ? '' : ' is-filtered-out'}`}
                   style={{
                     height: `${card.height}px`,
                     ...(card.imageUrl ? { backgroundImage: `url(${card.imageUrl})` } : {}),
                   }}
+                  aria-hidden={card.isVisible ? 'false' : 'true'}
                 >
                   <span className={`profile-card-badge profile-card-badge--${card.badgeTone}`}>
                     {card.type.toUpperCase()}
@@ -725,25 +787,32 @@ function ProfileMainView({
         </div>
       </div>
 
-      <button id="main-fab" className={`fab profile-fab shadow-xl ${isFabOpen ? 'fab-active' : ''}`} type="button" onClick={onFabToggle} aria-label="Add item">
+      <button
+        id="main-fab"
+        className={`fab profile-fab shadow-xl ${isFabOpen ? 'fab-active' : ''}`}
+        type="button"
+        onClick={onFabToggle}
+        aria-label="Add item"
+        style={{ right: `${fabPosition.right}px`, bottom: `${fabPosition.bottom}px` }}
+      >
         <span className="icon-plus">+</span>
       </button>
     </>
   );
 }
 
-function ProfileScreen({ activeScreen }) {
+function ProfileScreen({ activeScreen, profileView, onProfileViewChange }) {
   const [activeTab, setActiveTab] = useState('All');
   const [activeFilter, setActiveFilter] = useState('Items');
   const [isFabOpen, setIsFabOpen] = useState(false);
-  const [profileView, setProfileView] = useState('main');
+  const fabPosition = { right: 24, bottom: 120 };
 
   useEffect(() => {
     if (activeScreen !== 'profile') {
       setIsFabOpen(false);
-      setProfileView('main');
+      onProfileViewChange('main');
     }
-  }, [activeScreen]);
+  }, [activeScreen, onProfileViewChange]);
 
   return (
     <main id="profile-screen" className={`screen${activeScreen === 'profile' ? ' active' : ''}`} data-tab="profile">
@@ -753,35 +822,43 @@ function ProfileScreen({ activeScreen }) {
             activeTab={activeTab}
             activeFilter={activeFilter}
             isFabOpen={isFabOpen}
-            onTabChange={setActiveTab}
+            onTabChange={(tab) => {
+              setActiveTab(tab);
+              if (tab === 'Boards') {
+                setActiveFilter('Outfits');
+              } else if (activeFilter !== 'Items' && activeFilter !== 'Outfits') {
+                setActiveFilter('Items');
+              }
+            }}
             onFilterChange={setActiveFilter}
-            onCalendarOpen={() => setProfileView('planner')}
-            onStatsOpen={() => setProfileView('stats')}
+            onCalendarOpen={() => onProfileViewChange('planner')}
+            onStatsOpen={() => onProfileViewChange('stats')}
             onFabToggle={() => setIsFabOpen((open) => !open)}
+            fabPosition={fabPosition}
           />
           <ProfileFabMenuOverlay
             open={isFabOpen}
             onClose={() => setIsFabOpen(false)}
             onUpload={() => {
               setIsFabOpen(false);
-              setProfileView('ai-enhancer');
+              onProfileViewChange('ai-enhancer');
             }}
           />
         </>
       )}
 
-      {profileView === 'planner' && <ProfilePlannerView onBack={() => setProfileView('main')} />}
-      {profileView === 'stats' && <ProfileStatsView onBack={() => setProfileView('main')} />}
+      {profileView === 'planner' && <ProfilePlannerView onBack={() => onProfileViewChange('main')} />}
+      {profileView === 'stats' && <ProfileStatsView onBack={() => onProfileViewChange('main')} />}
       {profileView === 'ai-enhancer' && (
         <ProfileAiEnhancerView
-          onBack={() => setProfileView('main')}
-          onComplete={() => setProfileView('outfit-breakdown')}
+          onBack={() => onProfileViewChange('main')}
+          onComplete={() => onProfileViewChange('outfit-breakdown')}
         />
       )}
       {profileView === 'outfit-breakdown' && (
         <ProfileOutfitBreakdownView
-          onBack={() => setProfileView('main')}
-          onSave={() => setProfileView('main')}
+          onBack={() => onProfileViewChange('main')}
+          onSave={() => onProfileViewChange('main')}
         />
       )}
     </main>
@@ -881,11 +958,9 @@ function AppBottomNav({ activeScreen, onScreenChange }) {
       <button className={`discover-nav-button${activeScreen === 'explore' ? ' discover-nav-active' : ''}`} type="button" aria-label="Search" onClick={() => onScreenChange('explore')}>
         <SearchIcon active={activeScreen === 'explore'} />
       </button>
-        <button className={`discover-nav-button discover-nav-center${activeScreen === 'studio' ? ' discover-nav-active' : ''}`} type="button" aria-label="Create" onClick={() => onScreenChange('studio')}>
-          <span className="discover-nav-center-ring">
-            <SparklesIcon />
-          </span>
-        </button>
+      <button className={`discover-nav-button${activeScreen === 'studio' ? ' discover-nav-active' : ''}`} type="button" aria-label="Create" onClick={() => onScreenChange('studio')}>
+        <SparklesIcon active={activeScreen === 'studio'} />
+      </button>
       <button className={`discover-nav-button${activeScreen === 'inbox' ? ' discover-nav-active' : ''}`} type="button" aria-label="Notifications" onClick={() => onScreenChange('inbox')}>
         <BellIcon active={activeScreen === 'inbox'} />
       </button>
@@ -966,15 +1041,15 @@ function DialKitDragFix() {
   return null;
 }
 
-  function SparklesIcon({ active = false }) {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill={active ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M12 1L14.5 9 23 12 14.5 15 12 23 9.5 15 1 12 9.5 9z" fill="currentColor" stroke="none" />
-        <path d="M19 4L20 7l3 1-3 1-1 3-1-3-3-1 3-1z" fill="currentColor" stroke="none" />
-        <path d="M5 16l1 3 3 1-3 1-1 3-1-3-3-1 3-1z" fill="currentColor" stroke="none" />
-      </svg>
-    );
-  }
+function SparklesIcon({ active = false }) {
+  return (
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke={active ? '#0D0D0D' : '#C4C4C4'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z" />
+      <path d="M19 3l.8 2.2L22 6l-2.2.8L19 9l-.8-2.2L16 6l2.2-.8L19 3z" />
+      <path d="M5 15l.8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15z" />
+    </svg>
+  );
+}
 
 function BookmarkIcon({ dark = false }) {
   return (
@@ -984,9 +1059,9 @@ function BookmarkIcon({ dark = false }) {
   );
 }
 
-function ShareIcon() {
+function ShareIcon({ dark = false }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FAFAFA" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={dark ? '#0D0D0D' : '#FAFAFA'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="18" cy="5" r="3" />
       <circle cx="6" cy="12" r="3" />
       <circle cx="18" cy="19" r="3" />
@@ -1108,8 +1183,8 @@ function DiscoverOutfitOverlay({ card, onClose }) {
       authorContext: [14, 8, 20],
       authorContextLineHeight: [1.2, 0.8, 2],
       authorTextGap: [0, 0, 16],
-      itemsHeader:   [16, 8, 24],
-      itemBrand:     [14, 8, 20],
+      itemsHeader:   [14, 8, 24],
+      itemBrand:     [12, 8, 20],
       itemBrandLineHeight: [1.1, 0.8, 2],
       itemName:      [12, 8, 18],
       itemNameLineHeight: [1.1, 0.8, 2],
@@ -1179,12 +1254,11 @@ function DiscoverOutfitOverlay({ card, onClose }) {
         <div className="discover-overlay-footer" style={{ paddingTop: footerPadTop, paddingBottom: footerPadBottom }}>
           <div className="discover-overlay-footer-copy">
             {card.type === 'outfit' && (
-              <>
-                <span style={{ fontSize: text.footerCount }}>{detail.includedCount} Items included</span>
-                <span style={{ fontSize: 10, opacity: 0.3 }}>•</span>
-              </>
+              <div className="discover-overlay-footer-copy-stack">
+                <span style={{ fontSize: text.footerCount }}>{detail.includedCount} Items</span>
+                <strong style={{ fontSize: text.footerCta }}>Included</strong>
+              </div>
             )}
-            <strong style={{ fontSize: text.footerCta }}>{card.type === 'outfit' ? 'Style this Look' : 'Post Details'}</strong>
           </div>
           <button type="button" className="discover-overlay-cta" style={{ fontSize: ctaBtn.fontSize, borderRadius: ctaBtn.radius }}>
             <BookmarkIcon />
@@ -1200,20 +1274,19 @@ function DiscoverScreen({ activeDiscoverTab, onDiscoverTabChange, activeScreen }
   const [activeOutfitCard, setActiveOutfitCard] = useState(null);
   const leftColumnCards = discoverCards.filter((card) => card.column === 0);
   const rightColumnCards = discoverCards.filter((card) => card.column === 1);
-
-  const feedDials = useDialKit('Feed Card', {
-    avatarSize: [22, 16, 48],
-    nameFontSize: [10, 8, 20],
-    nameLineHeight: [1.2, 0.8, 2],
-    contextFontSize: [10, 8, 18],
-    contextLineHeight: [1.2, 0.8, 2],
-    rowGap: [4, 0, 24],
-    authorTextGap: [0, 0, 12],
-    top: [8, 0, 32],
-    left: [7, 0, 32],
-    right: [8, 0, 32],
+  const feedDials = {
+    avatarSize: 22,
+    nameFontSize: 10,
+    nameLineHeight: 1.2,
+    contextFontSize: 10,
+    contextLineHeight: 1.2,
+    rowGap: 4,
+    authorTextGap: 0,
+    top: 8,
+    left: 7,
+    right: 8,
     isBottom: true,
-  });
+  };
 
   useEffect(() => {
     if (activeScreen !== 'home') {
@@ -1340,6 +1413,39 @@ const inboxItems = [
   }
 ];
 
+const inboxTabContent = {
+  All: inboxItems,
+  Saves: [
+    {
+      id: 'saves-1',
+      title: 'New today',
+      items: [
+        { id: 'save-1', type: 'save', name: 'Liam_O and 4 others', action: 'saved your Utility Jacket to their Wardrobe.', time: '5h', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/6AFQP7ZDH931DK59DMCZFB3033.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/665YP1TGMBQ3MGX5VMRNN1785H.jpg' },
+        { id: 'save-2', type: 'save', name: 'Avery Chen', action: 'saved your Linen Shirt to their Wardrobe.', time: '7h', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0TK6E061QN92FS4WCMBFZ6T84Q.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/63AKWZN3SG6NK7PV7HABKPGKBY.jpg' },
+        { id: 'save-3', type: 'stat', name: 'System', action: 'Your Summer Edit reached 2.4k saves this week.', time: '1d', avatar: 'star', image: null }
+      ]
+    },
+    {
+      id: 'saves-2',
+      title: 'Earlier',
+      items: [
+        { id: 'save-4', type: 'save', name: 'Mina Park', action: 'saved your White Tee to their Wardrobe.', time: '2d', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/28AFFD2V1Q4A2G0TXPD524ZYHX.jpg', image: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3EM6C87RG55K3MCP8G3CD9V95Z.jpg' }
+      ]
+    }
+  ],
+  Follows: [
+    {
+      id: 'follows-1',
+      title: 'New today',
+      items: [
+        { id: 'follow-1', type: 'follow', name: 'Emma Rose', action: 'started following you.', time: '2h', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/464X8926HVCK2WWBTR75HE6K0D.jpg', hasButton: true },
+        { id: 'follow-2', type: 'follow', name: 'Noah Kim', action: 'started following you.', time: '4h', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0TK6E061QN92FS4WCMBFZ6T84Q.jpg', hasButton: true },
+        { id: 'follow-3', type: 'follow', name: 'Julia Stone', action: 'followed your profile.', time: '1d', avatar: 'https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/3JW400Y7PDBHDZMA98TXK3BH13.jpg', hasButton: true }
+      ]
+    }
+  ]
+};
+
 function InboxScreen({ activeScreen }) {
   const [activeTab, setActiveTab] = useState('All');
   // const { knob } = useDialKit();
@@ -1350,6 +1456,8 @@ function InboxScreen({ activeScreen }) {
   // const followBg = knob('Follow Btn Bg', '#F5F5F5');
   // const followColor = knob('Follow Btn Text', '#0D0D0D');
   // const followFontSize = knob('Follow Btn Font Size', 10, { min: 8, max: 16 });
+
+  const visibleSections = inboxTabContent[activeTab] ?? inboxItems;
 
   return (
     <main id="inbox-screen" className={`screen${activeScreen === 'inbox' ? ' active' : ''}`} data-tab="inbox">
@@ -1366,7 +1474,7 @@ function InboxScreen({ activeScreen }) {
         </header>
 
         <section className="inbox-scroll">
-          {inboxItems.map(section => (
+          {visibleSections.map(section => (
             <div key={section.id} className="inbox-section">
               <h2 className="inbox-section-title">{section.title}</h2>
               <div className="inbox-list">
@@ -1412,37 +1520,11 @@ function InboxScreen({ activeScreen }) {
 function ExploreScreen({ activeScreen }) {
   const [activeCategory, setActiveCategory] = useState('All');
   const heroContent = exploreHeroByCategory[activeCategory] ?? exploreHeroByCategory.All;
-  
-  const { search, hero, category, section, avatar } = useDialKit('Explore Screen', {
-    search: {
-      height: [40, 32, 60],
-      fontSize: [14, 10, 20],
-      padding: [16, 8, 32],
-    },
-    hero: {
-      height: [160, 100, 300],
-      titleSize: [16, 14, 32],
-      tagSize: [10.4, 8, 16],
-      padding: [16, 8, 32],
-    },
-    category: {
-      gap: [8, 0, 24],
-      paddingV: [6, 2, 16],
-      paddingH: [14, 4, 32],
-      fontSize: [13, 9, 18],
-    },
-    section: {
-      gap: [24, 8, 48],
-      titleSize: [16, 12, 24],
-      actionSize: [12, 9, 16],
-    },
-    avatar: {
-      size: [60, 36, 72],
-      nameSize: [11, 9, 14],
-      gap: [10, 6, 20],
-      labelGap: [2, 0, 14],
-    }
-  });
+  const search = { height: 40, fontSize: 14, padding: 16 };
+  const hero = { height: 160, titleSize: 16, tagSize: 10.4, padding: 16 };
+  const category = { gap: 8, paddingV: 6, paddingH: 14, fontSize: 13 };
+  const section = { gap: 24, titleSize: 16, actionSize: 12 };
+  const avatar = { size: 60, nameSize: 11, gap: 10, labelGap: 2 };
 
   const filteredBrands = activeCategory === 'All'
     ? topBrands
@@ -1541,6 +1623,7 @@ function App() {
   const [activeDiscoverTab, setActiveDiscoverTab] = useState('featured');
   const [isFabOpen, setIsFabOpen] = useState(false);
   const [globalDial, setGlobalDial] = useState({ radius: 20, gutter: 16, appScale: 1 });
+  const [profileView, setProfileView] = useState('main');
   const screenHistoryRef = useRef(['home']);
 
   const syncAnnotations = (annotations) => {
@@ -1589,10 +1672,10 @@ function App() {
 
               <InboxScreen activeScreen={activeScreen} />
 
-              <ProfileScreen activeScreen={activeScreen} />
+              <ProfileScreen activeScreen={activeScreen} profileView={profileView} onProfileViewChange={setProfileView} />
 
-              <AppStatusBar />
-              <AppBottomNav activeScreen={activeScreen} onScreenChange={handleScreenChange} />
+              {!(activeScreen === 'profile' && profileView === 'ai-enhancer') ? <AppStatusBar /> : null}
+              {!(activeScreen === 'profile' && profileView === 'ai-enhancer') ? <AppBottomNav activeScreen={activeScreen} onScreenChange={handleScreenChange} /> : null}
             </div>
             <div className="iphone-home-indicator" />
           </div>

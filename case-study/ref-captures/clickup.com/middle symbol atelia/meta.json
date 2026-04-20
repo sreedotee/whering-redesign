@@ -1,0 +1,113 @@
+{
+  "sectionName": "middle symbol atelia",
+  "siteName": "clickup.com",
+  "page": {
+    "title": "ClickUp™ | Maximize productivity • Software, AI, and humans converge",
+    "url": "https://clickup.com/"
+  },
+  "element": {
+    "tagName": "img",
+    "id": "",
+    "className": "",
+    "textPreview": "",
+    "selector": "div.CuHome_mainContent__xfnhR:nth-of-type(2) > section.Lp4BrainSection_wrapper__Tx4zA.CuHome_brainSection__ueWBx:nth-of-type(1) > div.Lp4BrainSection_container__u5fQb > div.Lp4BrainSection_innerContainer__SV_XJ:nth-of-type(13) > div.Lp4BrainSection_brainMaxSectionBottom__CsQzS:nth-of-type(4) > div.Lp4BrainSection_bottomCard__8ZxGb:nth-of-type(3) > div:nth-of-type(1) > img",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "div",
+        "id": "__next",
+        "className": ""
+      },
+      {
+        "tagName": "div",
+        "id": "gb-wrapper-home",
+        "className": "isHomePage isStaticHomePage v4-homepage"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "div",
+        "id": "v4-homepage",
+        "className": "v3"
+      },
+      {
+        "tagName": "main",
+        "id": "",
+        "className": "CuHome_mainWrapper__QDbpa"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "CuHome_mainContent__xfnhR"
+      },
+      {
+        "tagName": "section",
+        "id": "",
+        "className": "Lp4BrainSection_wrapper__Tx4zA CuHome_brainSection__ueWBx"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "Lp4BrainSection_container__u5fQb"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "Lp4BrainSection_innerContainer__SV_XJ"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "Lp4BrainSection_brainMaxSectionBottom__CsQzS"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "Lp4BrainSection_bottomCard__8ZxGb"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "img",
+        "id": "",
+        "className": ""
+      }
+    ],
+    "friendlyName": "img"
+  },
+  "rect": {
+    "left": 958.5,
+    "top": 418.375,
+    "width": 281.96875,
+    "height": 153.328125
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 5507,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 1,
+    "pseudoElementCount": 0,
+    "textNodeCount": 0
+  },
+  "capturedAt": "2026-04-06T23:50:36.133Z"
+}

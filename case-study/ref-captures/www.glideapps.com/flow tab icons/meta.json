@@ -1,0 +1,73 @@
+{
+  "sectionName": "flow tab icons",
+  "siteName": "www.glideapps.com",
+  "page": {
+    "title": "No Code App Builder: Create Custom, AI-Powered Apps | Glide",
+    "url": "https://www.glideapps.com/"
+  },
+  "element": {
+    "tagName": "video",
+    "id": "automation-video-3",
+    "className": "absolute inset-0 object-cover w-full h-full transition-opacity duration-500 opacity-100",
+    "textPreview": "Your browser does not support the video tag.",
+    "selector": "#automation-video-3",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "bootonfont_d5323533-module__5Jhr6a__variable affairsfont_ff3a17d-module__T9vOTG__variable antialiased"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "px-4 mx-auto max-w-[1536px]"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "py-20 md:py-24 lg:py-[120px]"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "flex flex-col gap-6 xl:flex-row xl:justify-between"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative aspect-[1.16] lg:w-full xl:w-[870px] flex-shrink-0 rounded-md overflow-hidden z-0"
+      },
+      {
+        "tagName": "video",
+        "id": "automation-video-3",
+        "className": "absolute inset-0 object-cover w-full h-full transition-opacity duration-500 opacity-100"
+      }
+    ],
+    "friendlyName": "video#automation-video-3.absolute.inset-0"
+  },
+  "rect": {
+    "left": 834.5,
+    "top": 120.9375,
+    "width": 870,
+    "height": 750
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 5261,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 2,
+    "pseudoElementCount": 0,
+    "textNodeCount": 1
+  },
+  "capturedAt": "2026-04-06T23:47:50.827Z"
+}

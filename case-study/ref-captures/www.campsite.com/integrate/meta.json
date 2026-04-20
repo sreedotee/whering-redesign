@@ -1,0 +1,88 @@
+{
+  "sectionName": "integrate",
+  "siteName": "www.campsite.com",
+  "page": {
+    "title": "Campsite — Work communication for distributed teams",
+    "url": "https://www.campsite.com/"
+  },
+  "element": {
+    "tagName": "img",
+    "id": "",
+    "className": "absolute left-0 right-0 top-0 w-full object-contain saturate-[110%]",
+    "textPreview": "",
+    "selector": "div > div.relative.flex > div.flex.flex-1:nth-of-type(4) > div.w-full.overflow-hidden > div.mx-auto.flex:nth-of-type(3) > section.flex.flex-col:nth-of-type(6) > div.relative.-mb-8 > img.absolute.left-0",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "light"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": "bg-primary dark:bg-neutral-950"
+      },
+      {
+        "tagName": "div",
+        "id": "__next",
+        "className": ""
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative flex flex-1 flex-col"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "flex flex-1 flex-col"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "w-full overflow-hidden"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "mx-auto flex w-full flex-col px-4 md:px-6 lg:px-8 3xl:gap-36 4xl:gap-40 xl:gap-18 3xl:py-32 4xl:py-36 isolate max-w-2xl gap-20 py-12 md:gap-24 md:py-16 lg:gap-28 lg:py-20 xl:py-24 2xl:gap-32 2xl:py-28"
+      },
+      {
+        "tagName": "section",
+        "id": "",
+        "className": "flex flex-col gap-4"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative -mb-8 flex aspect-video overflow-hidden lg:-mx-4 lg:p-12 xl:-mx-6 2xl:-mx-8"
+      },
+      {
+        "tagName": "img",
+        "id": "",
+        "className": "absolute left-0 right-0 top-0 w-full object-contain saturate-[110%]"
+      }
+    ],
+    "friendlyName": "img.absolute.left-0"
+  },
+  "rect": {
+    "left": 619,
+    "top": 329.203125,
+    "width": 672,
+    "height": 332.5
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 4595,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 1,
+    "pseudoElementCount": 0,
+    "textNodeCount": 0
+  },
+  "capturedAt": "2026-04-06T23:52:32.162Z"
+}

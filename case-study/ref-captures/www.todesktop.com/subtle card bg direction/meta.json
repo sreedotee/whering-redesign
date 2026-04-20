@@ -1,0 +1,68 @@
+{
+  "sectionName": "subtle card bg direction",
+  "siteName": "www.todesktop.com",
+  "page": {
+    "title": "ToDesktop",
+    "url": "https://www.todesktop.com/"
+  },
+  "element": {
+    "tagName": "div",
+    "id": "",
+    "className": "w-full left-0 absolute select-none top-0 h-full",
+    "textPreview": "",
+    "selector": "html > body > section.features.py-56:nth-of-type(3) > div.md\\:max-w-960.max-w-480:nth-of-type(2) > div.bg-body-light-bg-ghost.rounded-24:nth-of-type(2) > div.w-full.left-0:nth-of-type(1)",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "section",
+        "id": "",
+        "className": "features py-56 md:py-120 is-visible"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "md:max-w-960 max-w-480 px-12 grid md:grid-cols-2 mx-auto gap-24 mb-96"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "bg-body-light-bg-ghost rounded-24 relative overflow-hidden features-code"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "w-full left-0 absolute select-none top-0 h-full"
+      }
+    ],
+    "friendlyName": "div.w-full.left-0"
+  },
+  "rect": {
+    "left": 968,
+    "top": 126,
+    "width": 456,
+    "height": 612
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 2809,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 9,
+    "pseudoElementCount": 0,
+    "textNodeCount": 0
+  },
+  "capturedAt": "2026-04-06T19:05:30.186Z"
+}

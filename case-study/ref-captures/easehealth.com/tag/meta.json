@@ -1,0 +1,88 @@
+{
+  "sectionName": "tag",
+  "siteName": "easehealth.com",
+  "page": {
+    "title": "Ease Health | AI-Native CRM, EHR & RCM for Behavioral Health",
+    "url": "https://easehealth.com/"
+  },
+  "element": {
+    "tagName": "div",
+    "id": "",
+    "className": "max-width-xlarge",
+    "textPreview": "The solutionInstead of bouncing between CRM, EHR, and RCM systems, Ease provides one AI-powered system for referrals, clinical notes, and bi",
+    "selector": "div:nth-of-type(3) > main.main-wrapper > section.section_solution:nth-of-type(2) > div.solution-inside > div.padding-global.is-text:nth-of-type(1) > div.container-medium > div.solution_component.is-solution:nth-of-type(2) > div.max-width-xlarge",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "eh-js w-mod-js w-mod-ix3 reveal-js lenis lenis-scrolling"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": "font-sans text-[#0f3e17] antialiased bg-[#fffefc] selection:bg-[#0f3e17] selection:text-white"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "main",
+        "id": "",
+        "className": "main-wrapper"
+      },
+      {
+        "tagName": "section",
+        "id": "",
+        "className": "section_solution"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "solution-inside"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "padding-global is-text"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "container-medium"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "solution_component is-solution"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "max-width-xlarge"
+      }
+    ],
+    "friendlyName": "div.max-width-xlarge"
+  },
+  "rect": {
+    "left": 431.546875,
+    "top": 199.28125,
+    "width": 901.109375,
+    "height": 230.765625
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 2600,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 5,
+    "pseudoElementCount": 0,
+    "textNodeCount": 2
+  },
+  "capturedAt": "2026-04-06T18:54:40.555Z"
+}

@@ -1,4 +1,4 @@
-# Whering Design System (Modularity First)
+# Whering Design System 
 
 This design system is extracted from the latest profile identity artboards (`2BS-0` and `2HT-1`). It focuses on a **Modern Editorial** aesthetic, combining high-craft Serif typography with clean, geometric Sans-serif functional elements.
 

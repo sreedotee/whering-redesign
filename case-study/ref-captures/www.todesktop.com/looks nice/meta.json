@@ -1,0 +1,58 @@
+{
+  "sectionName": "looks nice",
+  "siteName": "www.todesktop.com",
+  "page": {
+    "title": "ToDesktop",
+    "url": "https://www.todesktop.com/"
+  },
+  "element": {
+    "tagName": "div",
+    "id": "",
+    "className": "md:max-w-960 max-w-480 grid md:grid-cols-2 lg:grid-cols-3 px-12 mx-auto features-info relative",
+    "textPreview": "App store support.Build for Microsoft and Mac App StoreNative installers.Boost “Download Open” rates with efficient installers.Native module",
+    "selector": "html > body > section.features.py-56:nth-of-type(3) > div.md\\:max-w-960.max-w-480:nth-of-type(5)",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "section",
+        "id": "",
+        "className": "features py-56 md:py-120 is-visible"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "md:max-w-960 max-w-480 grid md:grid-cols-2 lg:grid-cols-3 px-12 mx-auto features-info relative"
+      }
+    ],
+    "friendlyName": "div.md:max-w-960.max-w-480"
+  },
+  "rect": {
+    "left": 476,
+    "top": 305,
+    "width": 960,
+    "height": 271
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 5856,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 55,
+    "pseudoElementCount": 0,
+    "textNodeCount": 20
+  },
+  "capturedAt": "2026-04-06T19:04:29.297Z"
+}

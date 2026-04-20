@@ -1,0 +1,73 @@
+{
+  "sectionName": "banner that shows mobile prototype",
+  "siteName": "www.deel.com",
+  "page": {
+    "title": "Find & Hire Employees Around The World | Deel Hire",
+    "url": "https://www.deel.com/solutions/hire/"
+  },
+  "element": {
+    "tagName": "div",
+    "id": "",
+    "className": "relative z-10 rounded-[20px] overflow-hidden min-h-[511px] tablet:min-h-[413px] desktop:min-h-[480px] content-start tablet:content-center h-full w-full max-w-[1312px] mx-auto",
+    "textPreview": "See the products that help you hire anywhereBook a free 30-minute demo",
+    "selector": "html.__variable_74193b.__variable_908ff8 > body > main.m-0.p-0 > div.relative > div.bg-surface-secondary.flex > section.relative.w-full:nth-of-type(2) > div.relative.z-10",
+    "domPath": [
+      {
+        "tagName": "html",
+        "id": "",
+        "className": "__variable_74193b __variable_908ff8 __variable_87a0ac __variable_b5f81a __variable_182869 antialiased"
+      },
+      {
+        "tagName": "body",
+        "id": "",
+        "className": ""
+      },
+      {
+        "tagName": "main",
+        "id": "",
+        "className": "m-0 p-0"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "bg-surface-secondary flex flex-col items-center"
+      },
+      {
+        "tagName": "section",
+        "id": "2",
+        "className": "relative w-full px-6 tablet:px-10 py-8 sm:py-16 bg-white"
+      },
+      {
+        "tagName": "div",
+        "id": "",
+        "className": "relative z-10 rounded-[20px] overflow-hidden min-h-[511px] tablet:min-h-[413px] desktop:min-h-[480px] content-start tablet:content-center h-full w-full max-w-[1312px] mx-auto"
+      }
+    ],
+    "friendlyName": "div.relative.z-10"
+  },
+  "rect": {
+    "left": 296.5,
+    "top": 255.984375,
+    "width": 1312,
+    "height": 480
+  },
+  "viewport": {
+    "width": 1920,
+    "height": 991,
+    "scrollX": 0,
+    "scrollY": 8681,
+    "devicePixelRatio": 1
+  },
+  "snapshotMeta": {
+    "canvasCount": 0,
+    "elementCount": 9,
+    "pseudoElementCount": 0,
+    "textNodeCount": 2
+  },
+  "capturedAt": "2026-04-06T18:55:55.128Z"
+}
