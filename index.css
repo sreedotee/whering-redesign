@@ -74,7 +74,7 @@
 }
 
 body {
-    background-color: var(--bg-secondary); /* Dark backing for desktop shell */
+    background-color: #FFFFFF;
     color: var(--fg-primary);
     font-family: var(--font-body);
     line-height: var(--line-height-18);
@@ -101,24 +101,25 @@ body {
     justify-content: center;
     align-items: center;
     padding: 28px;
-    background:
-        radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 34%),
-        linear-gradient(180deg, #171717 0%, #0c0c0d 100%);
+    background: #FFFFFF;
 }
 
 .iphone-frame {
     position: relative;
     width: min(100%, 418px);
     aspect-ratio: 418 / 872;
-    padding: 11px;
-    border-radius: 42px;
-    background:
-        linear-gradient(145deg, #54565c 0%, #232428 20%, #0d0d10 46%, #18191d 100%);
+    padding: 14px;
+    border-radius: 48px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
     box-shadow:
-        0 34px 80px rgba(0, 0, 0, 0.5),
-        0 8px 26px rgba(0, 0, 0, 0.24),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -2px 8px rgba(0, 0, 0, 0.72);
+        0 2px 4px rgba(0,0,0,0.2),
+        0 4px 8px rgba(0,0,0,0.18),
+        0 8px 16px rgba(0,0,0,0.15),
+        0 12px 24px rgba(0,0,0,0.12),
+        0 16px 32px rgba(0,0,0,0.10),
+        0 24px 48px rgba(0,0,0,0.08),
+        0 32px 64px rgba(0,0,0,0.06),
+        inset 0 1px 2px rgba(255,255,255,0.08);
 }
 
 .iphone-frame-bezel {
@@ -126,26 +127,36 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    border-radius: 31px;
-    background: #080808;
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.025);
+    border-radius: 34px;
+    background: #F5F5F5;
+    box-shadow: inset 0 0 3px 1px rgba(0,0,0,0.08);
 }
 
 .iphone-frame-camera {
     position: absolute;
-    top: 17px;
+    top: 12px;
     left: 50%;
-    width: 102px;
-    height: 27px;
+    width: 120px;
+    height: 32px;
     transform: translateX(-50%);
     border-radius: 999px;
-    background: linear-gradient(180deg, #060607 0%, #17181a 100%);
+    background: radial-gradient(circle at 35% 35%, #1a1a1a 0%, #050505 100%);
     box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.07),
-        0 2px 5px rgba(0, 0, 0, 0.38);
-    z-index: 8;
+        inset 0 0 1px 0.5px rgba(255,255,255,0.08),
+        0 2px 8px rgba(0,0,0,0.6);
+    z-index: 1002;
+}
+
+.iphone-frame-camera::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -20px;
+    right: -20px;
+    height: 44px;
+    background: #F5F5F5;
+    border-radius: 0 0 32px 32px;
+    z-index: -1;
 }
 
 .iphone-frame-buttons {
@@ -160,8 +171,7 @@ body {
     display: block;
     width: 4px;
     border-radius: 999px;
-    background: linear-gradient(180deg, #5b5b5f 0%, #1e1e21 100%);
-    box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.4);
+    background: linear-gradient(180deg, #3a3a3a 0%, #1a1a1a 100%);
 }
 
 .iphone-frame-buttons--left {
@@ -207,7 +217,7 @@ body {
     position: relative;
     overflow: hidden;
     --app-page-margin: 8px;
-    --app-status-bar-top: 36px;
+    --app-status-bar-top: 16px;
     --app-status-bar-height: 28px;
     --app-status-bar-offset: calc(var(--app-status-bar-top) + var(--app-status-bar-height));
     --app-bottom-nav-height: 82px;
@@ -315,7 +325,7 @@ body {
     align-items: center;
     justify-content: center;
     padding-inline: var(--discover-page-margin);
-    background: linear-gradient(180deg, #f6f6f4 0%, rgba(255, 255, 255, 0.9) 72%, rgba(255, 255, 255, 0) 100%);
+    background: #FFFFFF;
     z-index: 4;
 }
 
@@ -563,7 +573,8 @@ body {
     padding-inline: var(--discover-save-button-padding-inline);
     gap: var(--discover-save-button-gap);
     justify-content: center;
-    background-color: #0D0D0D;
+    background-color: rgba(13, 13, 13, 0.4);
+    backdrop-filter: blur(10px);
     color: #FFFFFF;
     font-size: var(--discover-save-text-size);
     line-height: var(--discover-save-text-line);
@@ -587,25 +598,35 @@ body {
 
 .discover-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 20;
-    background: rgba(83, 86, 98, 0.66);
-    backdrop-filter: blur(6px);
+    background: #FFFFFF;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .discover-overlay-card {
-    width: min(100%, 352px);
-    border-radius: 28px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
     overflow: hidden;
     background: #FFFFFF;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+    box-shadow: none;
     display: flex;
     flex-direction: column;
-    max-height: calc(100dvh - 214px);
 }
 
 .discover-overlay-hero {
@@ -641,11 +662,13 @@ body {
 }
 
 .discover-overlay-body {
-    padding: 14px;
+    padding: 8px 0;
+    padding-bottom: 0;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
+    flex: 1;
 }
 
 .discover-overlay-author-row {
@@ -653,6 +676,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    padding: 0;
 }
 
 .discover-overlay-follow {
@@ -685,6 +709,25 @@ body {
     margin: 10px 0 12px;
 }
 
+.discover-overlay-back {
+    position: absolute;
+    top: calc(var(--app-status-bar-offset) + 6px);
+    left: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+}
+
 .discover-overlay-share {
     width: 32px;
     height: 32px;
@@ -710,14 +753,17 @@ body {
     line-height: 1.15;
     font-weight: 400;
     margin-bottom: 0;
+    padding: 0;
 }
 
 .discover-overlay-items {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .discover-overlay-items::-webkit-scrollbar {
@@ -783,10 +829,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 8px 12px;
+    gap: 16px;
+    padding: 16px 24px;
+    padding-bottom: calc(16px + var(--app-bottom-nav-height));
     background: #FFFFFF;
-    border-top: 1px solid rgba(13, 13, 13, 0.12);
+    border-top: 1px solid rgba(13, 13, 13, 0.08);
+    flex-shrink: 0;
 }
 
 .discover-overlay-footer-copy {
@@ -888,17 +936,17 @@ body {
 
 .app-status-bar {
     position: absolute;
-    top: var(--app-status-bar-top);
+    top: 8px;
     left: 0;
     width: 100%;
-    height: var(--app-status-bar-height);
-    padding-inline: var(--app-page-margin);
+    height: 44px;
+    padding-inline: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     z-index: 1001;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
+    background: #FFFFFF;
+    border-radius: 0;
     box-sizing: border-box;
 }
 
@@ -1934,7 +1982,7 @@ h2, .heading {
 
 #studio-screen .studio-sort-pill {
     height: 22px;
-    padding: 5px 12px;
+    padding: 6.25px 12px;
     gap: 5px;
     border: 0;
     border-radius: 11px;
@@ -2093,6 +2141,7 @@ h2, .heading {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin-top: 16px;
 }
 
 .inbox-section-title {
@@ -2876,7 +2925,7 @@ h2, .heading {
     height: 42px;
     border: none;
     border-radius: 8px;
-    background: #FFFFFF;
+    background: transparent;
     color: #0D0D0D;
     display: inline-flex;
     align-items: center;
@@ -2886,7 +2935,7 @@ h2, .heading {
 }
 
 .profile-back-button--ghost {
-    background: #F8F8F8;
+    background: transparent;
 }
 
 .profile-back-button--dark {
@@ -3469,11 +3518,12 @@ h2, .heading {
 }
 
 .enhancer-progress-track {
-    width: 100%;
+    width: calc(100% - 24px);
     height: 6px;
     border-radius: 999px;
     background: #F0F0F0;
     overflow: hidden;
+    margin-inline: 12px;
 }
 
 .enhancer-progress-fill {
@@ -3500,7 +3550,7 @@ h2, .heading {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    padding: calc(var(--app-status-bar-offset) + 18px) 0 18px;
+    padding: calc(var(--app-status-bar-offset) + 18px) 0 calc(var(--app-bottom-nav-height) + 16px);
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -3744,4 +3794,330 @@ body * {
 .dialkit-panel-root button {
     cursor: pointer;
     pointer-events: auto;
+}
+
+/* My Stats View */
+.profile-stats-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #f9f8f9;
+    overflow-y: auto;
+}
+
+.profile-stats-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: linear-gradient(135deg, #e8d5f2 0%, #f0e0f5 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.profile-stats-title {
+    font-size: 20px;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+}
+
+.stats-tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: white;
+}
+
+.stats-tab {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    background: transparent;
+    font-size: 15px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.stats-tab.active {
+    color: #1a1a1a;
+    border-bottom-color: #333;
+}
+
+.stats-overview {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.stats-top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stats-label {
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+}
+
+.stats-value {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.stats-slider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stats-slider input {
+    flex: 1;
+    height: 6px;
+    appearance: none;
+    background: linear-gradient(90deg, #ddd 0%, #ff8800 100%);
+    border-radius: 3px;
+    outline: none;
+}
+
+.stats-slider input::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ff8800;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stats-slider-value {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 45px;
+}
+
+.stats-circular-metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-circle {
+    width: 140px;
+    height: 140px;
+    position: relative;
+}
+
+.stats-circle svg {
+    width: 100%;
+    height: 100%;
+}
+
+.stats-circle-bg {
+    fill: none;
+    stroke: #f0f0f0;
+    stroke-width: 12;
+}
+
+.stats-circle-fill {
+    fill: none;
+    stroke: #ff8800;
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.5s ease;
+}
+
+.stats-circle-text {
+    font-size: 20px;
+    font-weight: 700;
+    fill: #1a1a1a;
+}
+
+.stats-circle-label {
+    font-size: 14px;
+    color: #666;
+}
+
+.stats-expandable-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stats-expandable {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-expandable--blue {
+    border-top: 4px solid #0099ff;
+}
+
+.stats-expandable--orange {
+    border-top: 4px solid #ff8800;
+}
+
+.stats-expandable--purple {
+    border-top: 4px solid #d084d6;
+}
+
+.stats-expandable-header {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: background 0.2s;
+}
+
+.stats-expandable--blue .stats-expandable-header {
+    background: #0099ff;
+    color: white;
+}
+
+.stats-expandable--orange .stats-expandable-header {
+    background: #ff8800;
+    color: white;
+}
+
+.stats-expandable--purple .stats-expandable-header {
+    background: #d084d6;
+    color: white;
+}
+
+.stats-expandable-content {
+    padding: 20px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.stats-breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stats-breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+.stats-pie-chart {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.stats-view-breakdown {
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stats-view-breakdown:hover {
+    background: #f5f5f5;
+}
+
+.stats-usage-section {
+    margin-bottom: 24px;
+}
+
+.stats-usage-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+}
+
+.stats-item-card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.stats-item-image {
+    width: 80px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+}
+
+.stats-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+}
+
+.stats-wear-badge {
+    background: #cdff00;
+    color: #1a1a1a;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.stats-cost {
+    font-size: 12px;
+    color: #999;
+}
+
+.stats-longevity {
+    padding: 16px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.stats-unpacked {
+    padding: 40px 20px;
+    text-align: center;
+    color: #999;
 }

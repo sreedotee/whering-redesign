@@ -370,19 +370,6 @@ const plannerDays = [
   { day: 'SAT', date: 17 },
 ];
 
-const weeklyUsageByRange = {
-  Week: [0.16, 0.58, 0.9, 0.36, 0.46, 0.8, 0.22],
-  Month: [0.44, 0.62, 0.3, 0.78, 0.54, 0.68, 0.48],
-  Year: [0.72, 0.42, 0.6, 0.33, 0.85, 0.57, 0.5],
-};
-
-const yearlyConsistencyCells = [
-  'solid', 'mid', 'off', 'soft', 'solid',
-  'solid', 'off', 'solid', 'mid', 'off',
-  'soft', 'solid', 'solid', 'off', 'solid',
-  'mid', 'off', 'soft', 'solid', 'solid',
-];
-
 const detectedOutfitItems = [
   {
     id: 'detected-1',
@@ -483,7 +470,7 @@ function ProfilePlannerView({ onBack }) {
 
       <section className="planner-section">
         <div className="planner-section-header">
-          <h2>Today's Look</h2>
+          <h2>Today's Outfit</h2>
           <span className="planner-weather">65°F • Sunny</span>
         </div>
 
@@ -520,69 +507,163 @@ function ProfilePlannerView({ onBack }) {
 }
 
 function ProfileStatsView({ onBack }) {
-  const [activeRange, setActiveRange] = useState('Week');
-  const bars = weeklyUsageByRange[activeRange];
+  const [activeTab, setActiveTab] = useState('overview');
+  const [expandedSections, setExpandedSections] = useState({});
+
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
 
   return (
     <div className="profile-subscreen profile-stats-view">
       <header className="profile-stats-header">
-        <button type="button" className="profile-back-button" onClick={onBack} aria-label="Back to profile">
+        <button type="button" className="profile-back-button" onClick={onBack} aria-label="Back">
           <BackChevronIcon />
         </button>
-        <h1 className="profile-stats-title">Wardrobe Habits</h1>
+        <h1 className="profile-stats-title">My Stats</h1>
         <div className="profile-stats-spacer" />
       </header>
 
-      <div className="stats-range-switch" role="tablist" aria-label="Wardrobe habits range">
-        {['Week', 'Month', 'Year'].map((range) => (
+      <div className="stats-tabs">
+        {['overview', 'unpacked'].map((tab) => (
           <button
-            key={range}
+            key={tab}
             type="button"
-            className={`stats-range-option${activeRange === range ? ' active' : ''}`}
-            onClick={() => setActiveRange(range)}
+            className={`stats-tab${activeTab === tab ? ' active' : ''}`}
+            onClick={() => setActiveTab(tab)}
           >
-            {range}
+            {tab === 'overview' ? 'Overview' : 'Unpacked'}
           </button>
         ))}
       </div>
 
-      <section className="stats-section">
-        <div className="stats-section-header">
-          <h2>Weekly Usage</h2>
-          <span>Avg: 1.4 Items/Day</span>
-        </div>
-
-        <div className="stats-chart">
-          {bars.map((value, index) => (
-            <div key={`bar-${index}`} className="stats-bar-column">
-              <div className="stats-bar-track">
-                <div
-                  className={`stats-bar-fill${index === 2 ? ' highlight' : ''}`}
-                  style={{ height: `${Math.max(18, value * 100)}%` }}
-                />
-              </div>
-              <span className={`stats-bar-label${index === 2 ? ' highlight' : ''}`}>
-                {['M', 'T', 'W', 'T', 'F', 'S', 'S'][index]}
-              </span>
+      {activeTab === 'overview' && (
+        <div className="stats-overview">
+          <div className="stats-top-row">
+            <div className="stats-metric">
+              <div className="stats-label">Wardrobe value</div>
+              <div className="stats-value">₹0</div>
             </div>
-          ))}
-        </div>
-      </section>
+            <div className="stats-metric">
+              <div className="stats-label">Wardrobe Usage</div>
+              <div className="stats-slider">
+                <input type="range" min="0" max="100" value="100" disabled />
+                <span className="stats-slider-value">100%</span>
+              </div>
+            </div>
+          </div>
 
-      <section className="stats-summary-card">
-        <h2>Yearly Consistency</h2>
-        <div className="stats-consistency-grid">
-          {yearlyConsistencyCells.map((tone, index) => (
-            <span key={`consistency-${index}`} className={`consistency-cell consistency-cell--${tone}`} />
-          ))}
+          <div className="stats-circular-metric">
+            <div className="stats-circle">
+              <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" className="stats-circle-bg" />
+                <circle cx="50" cy="50" r="45" className="stats-circle-fill" style={{ strokeDasharray: '282.74 282.74' }} />
+                <text x="50" y="55" textAnchor="middle" className="stats-circle-text">
+                  100%
+                </text>
+              </svg>
+            </div>
+            <div className="stats-circle-label">2/2 Outfits worn</div>
+          </div>
+
+          <div className="stats-expandable-sections">
+            {[
+              { id: 'wardrobe', title: "What's in my wardrobe?", color: 'blue' },
+              { id: 'usage', title: 'My usage', color: 'orange' },
+              { id: 'longevity', title: 'Wardrobe Longevity', color: 'purple' },
+            ].map((section) => (
+              <div key={section.id} className={`stats-expandable stats-expandable--${section.color}`}>
+                <button
+                  type="button"
+                  className="stats-expandable-header"
+                  onClick={() => toggleSection(section.id)}
+                >
+                  <span>{section.title}</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points={expandedSections[section.id] ? '18 15 12 9 6 15' : '6 9 12 15 18 9'} />
+                  </svg>
+                </button>
+
+                {expandedSections[section.id] && (
+                  <div className="stats-expandable-content">
+                    {section.id === 'wardrobe' && (
+                      <>
+                        <div className="stats-breakdown-list">
+                          {[
+                            { label: 'New', value: '0%' },
+                            { label: 'Preloved', value: '0%' },
+                            { label: 'Rental', value: '0%' },
+                            { label: 'Handmade', value: '0%' },
+                            { label: 'Gifted', value: '0%' },
+                          ].map((item) => (
+                            <div key={item.label} className="stats-breakdown-item">
+                              <span>{item.label}</span>
+                              <span>{item.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="stats-pie-chart">
+                          <svg viewBox="0 0 100 100" width="120" height="120">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" strokeWidth="15" strokeDasharray="94.25 0 0 282.74" />
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#ffd700" strokeWidth="15" strokeDasharray="0 0 94.25 282.74" />
+                            <text x="50" y="55" textAnchor="middle" fontSize="16" fontWeight="bold">
+                              2
+                            </text>
+                            <text x="50" y="70" textAnchor="middle" fontSize="12" fill="#666">
+                              Items
+                            </text>
+                          </svg>
+                        </div>
+                        <button type="button" className="stats-view-breakdown">View breakdown</button>
+                      </>
+                    )}
+
+                    {section.id === 'usage' && (
+                      <>
+                        <div className="stats-usage-section">
+                          <h3>Most worn items</h3>
+                          <div className="stats-item-card">
+                            <div className="stats-item-image" style={{ backgroundImage: `url(https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0MQFX9J40QEVTKRGZ2G6WBYFMX.jpg)` }} />
+                            <div className="stats-item-info">
+                              <span className="stats-wear-badge">Worn 2 times</span>
+                              <span className="stats-cost">₹0.00/wear</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="stats-usage-section">
+                          <h3>Least worn items</h3>
+                          <div className="stats-item-card">
+                            <div className="stats-item-image" style={{ backgroundImage: `url(https://app.paper.design/file-assets/01KPAP3TXNQJ89SHJ3P0WDMA3F/0MQFX9J40QEVTKRGZ2G6WBYFMX.jpg)` }} />
+                            <div className="stats-item-info">
+                              <span className="stats-wear-badge">Worn 2 times</span>
+                              <span className="stats-cost">₹0.00/wear</span>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    )}
+
+                    {section.id === 'longevity' && (
+                      <div className="stats-longevity">
+                        <p>Your wardrobe longevity data will appear here as you use Whering.</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="stats-summary-footer">
-          <span>284 Active Days in 2026</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <polyline points="9 6 15 12 9 18" />
-          </svg>
+      )}
+
+      {activeTab === 'unpacked' && (
+        <div className="stats-unpacked">
+          <p>Your unpacked season summaries will appear here.</p>
         </div>
-      </section>
+      )}
     </div>
   );
 }
@@ -1148,19 +1229,19 @@ function DiscoverCard({ card, onOpen, dials }) {
 function DiscoverOutfitOverlay({ card, onClose }) {
   const detail = discoverOutfitDetails[card.id] ?? discoverOutfitDetails.default;
   const { overlayRadius, authorGap, authorPad, itemsGap, itemRadius, authorAvatarSize, itemsTitleGap, itemCardGap, itemCardWidth, heroHeight, bodyPad, footerPadTop, footerPadBottom, followBtn, ctaBtn, itemSaveIcon, text } = useDialKit('Discover Overlay', {
-    overlayRadius: [12, 0, 48],
-    authorGap:     [4,  0, 32],
-    authorPad:     [0,  0, 24],
-    itemsGap:      [4,  0, 32],
+    overlayRadius: [0, 0, 48],
+    authorGap:     [8,  0, 32],
+    authorPad:     [8,  0, 24],
+    itemsGap:      [12,  0, 32],
     itemRadius:    [4,  0, 32],
     itemCardGap:   [2,  0, 16],
     authorAvatarSize: [36, 24, 64],
-    itemsTitleGap: [6, 0, 32],
+    itemsTitleGap: [12, 0, 32],
     itemCardWidth: [80, 48, 120],
-    heroHeight:    [330, 150, 500],
-    bodyPad:       [14, 0, 32],
-    footerPadTop:  [8, 0, 32],
-    footerPadBottom: [8, 0, 48],
+    heroHeight:    [450, 150, 500],
+    bodyPad:       [8, 0, 32],
+    footerPadTop:  [16, 0, 32],
+    footerPadBottom: [16, 0, 48],
     followBtn: {
       _collapsed: true,
       radius: [4, 0, 32],
@@ -1194,16 +1275,8 @@ function DiscoverOutfitOverlay({ card, onClose }) {
   });
 
   return (
-    <div
-      className="discover-overlay"
-      style={{ borderRadius: overlayRadius }}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) {
-          onClose();
-        }
-      }}
-    >
-      <div className="discover-overlay-card" style={{ borderRadius: overlayRadius, overflow: 'hidden' }}>
+    <div className="discover-overlay">
+      <div className="discover-overlay-card">
         <div
           className="discover-overlay-hero"
           style={{
@@ -1213,13 +1286,16 @@ function DiscoverOutfitOverlay({ card, onClose }) {
             position: 'relative',
           }}
         >
+          <button type="button" className="discover-overlay-back" onClick={onClose} aria-label="Back">
+            <BackChevronIcon />
+          </button>
           <button type="button" className="discover-overlay-share" aria-label="Share outfit" style={{ position: 'absolute', bottom: 14, right: 14, background: 'none', zIndex: 10 }}>
             <ShareIcon />
           </button>
         </div>
 
-        <div className="discover-overlay-body" style={{ padding: bodyPad }}>
-          <div className="discover-overlay-author-row" style={{ gap: authorGap, padding: authorPad }}>
+        <div className="discover-overlay-body" style={{ paddingTop: 16, paddingLeft: 16, paddingRight: 16 }}>
+          <div className="discover-overlay-author-row" style={{ gap: authorGap, padding: authorPad, marginBottom: 8 }}>
             <div className="discover-author">
               <div className="discover-author-avatar" style={{ width: authorAvatarSize, height: authorAvatarSize, flexShrink: 0, ...(card.authorAvatar ? { backgroundImage: `url(${card.authorAvatar})` } : {}) }} />
               <div className="discover-author-text" style={{ gap: text.authorTextGap }}>
