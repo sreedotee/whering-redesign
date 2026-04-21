@@ -618,6 +618,28 @@ body {
     }
 }
 
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpStaggered {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .discover-overlay-card {
     width: 100%;
     height: 100%;
@@ -923,6 +945,8 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
+    transition: color 200ms ease-out;
 }
 
 .discover-nav-button.discover-nav-active {
@@ -1035,12 +1059,21 @@ h1, .display {
     font-size: var(--font-size-64);
     line-height: var(--line-height-64);
     font-weight: 400;
+    text-wrap: balance;
+    -webkit-font-smoothing: antialiased;
 }
 
 h2, .heading {
     font-size: var(--font-size-36);
     line-height: var(--line-height-36);
     font-weight: 400;
+    text-wrap: balance;
+    -webkit-font-smoothing: antialiased;
+}
+
+p, body {
+    text-wrap: pretty;
+    -webkit-font-smoothing: antialiased;
 }
 
 .caption {
@@ -1060,6 +1093,15 @@ h2, .heading {
     cursor: pointer;
     font-weight: 400;
     border-radius: var(--radius-pill);
+    transition: transform 120ms ease-out, background-color 120ms ease-out, box-shadow 120ms ease-out;
+}
+
+.button-primary:active {
+    transform: scale(0.96);
+}
+
+.button-primary:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* ── Layout Components ── */
@@ -1371,7 +1413,7 @@ h2, .heading {
     height: 6px;
     background-color: var(--fg-primary);
     border-radius: 3px;
-    transition: all var(--duration-md) var(--ease-drawer);
+    transition: transform var(--duration-md) var(--ease-drawer), opacity var(--duration-md) var(--ease-drawer);
 }
 
 /* ── Profile Header ── */
@@ -1415,8 +1457,25 @@ h2, .heading {
     justify-content: center;
     align-items: center;
     font-size: 48px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow:
+        0 2px 4px rgba(0,0,0,0.08),
+        0 4px 8px rgba(0,0,0,0.1),
+        0 8px 16px rgba(0,0,0,0.12);
     z-index: 500;
+    transition: transform 120ms ease-out, box-shadow 120ms ease-out;
+    border: none;
+    cursor: pointer;
+}
+
+.fab:active {
+    transform: scale(0.96);
+}
+
+.fab:hover {
+    box-shadow:
+        0 2px 4px rgba(0,0,0,0.1),
+        0 4px 8px rgba(0,0,0,0.12),
+        0 12px 24px rgba(0,0,0,0.15);
 }
 
 /* ── Overlays ── */
@@ -1796,7 +1855,7 @@ h2, .heading {
     font-weight: 400;
     white-space: nowrap;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .studio-cat-pill.active {
@@ -2123,7 +2182,7 @@ h2, .heading {
     font-weight: 400;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .inbox-tab-chip.active {
