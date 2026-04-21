@@ -4296,14 +4296,19 @@ body * {
     border: none;
     background: transparent;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 16px;
     cursor: pointer;
     font-size: 15px;
     font-weight: 600;
     color: #1a1a1a;
     transition: background 0.2s;
+    text-align: center;
+}
+
+.stats-expandable-header span {
+    flex: 1;
+    text-align: center;
 }
 
 .stats-expandable--blue .stats-expandable-header {
